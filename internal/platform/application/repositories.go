@@ -9,5 +9,5 @@ func (a *App) registerRepositories() {
 }
 
 func (a *App) registerAlertRepository() {
-	a.Repositories.AlertRepository = alert.NewAlertRepository(1)
+	a.Repositories.AlertRepository = alert.NewAlertRepository(a.configs)
 }
