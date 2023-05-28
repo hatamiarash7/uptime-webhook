@@ -1,9 +1,9 @@
 package models
 
-type SquadcastTrigger struct {
-	Message     string                  `json:"message"`
-	Description string                  `json:"description"`
-	Tags        map[string]SquadcastTag `json:"tags"`
+type SquadcastIncident struct {
+	Message     string                  `json:"message,omitempty"`
+	Description string                  `json:"description,omitempty"`
+	Tags        map[string]SquadcastTag `json:"tags,omitempty"`
 	Status      string                  `json:"status"`
 	EventID     string                  `json:"event_id"`
 }
@@ -11,9 +11,4 @@ type SquadcastTrigger struct {
 type SquadcastTag struct {
 	Color string `json:"color"`
 	Value string `json:"value"`
-}
-
-type SquadcastResolve struct {
-	Status  string `json:"status"`
-	EventID string `json:"event_id"`
 }
