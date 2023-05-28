@@ -31,15 +31,23 @@ func (r *AlertRepository) CreateSquadcastIncident(alert models.Alert) error {
 		"locations": {Color: "#1bab5c", Value: strings.Join(alert.Data.Locations, ", ")},
 	}
 
-	a := models.SquadcastTrigger{
-		Message:     "The " + alert.Data.Device.DisplayName + " is " + status,
-		Description: "Your " + alert.Data.Service.Name + " service is " + status + " at " + alert.Data.Alert.CreatedAt.Format("2006-01-02 15:04:05"),
-		Tags:        tags,
-		Status:      "trigger",
-		EventID:     strconv.Itoa(alert.Data.Alert.ID),
+	var payload models.SquadcastIncident
+	if alert.Event == "alert_raised" {
+		payload = models.SquadcastIncident{
+			Message:     "The " + alert.Data.Device.DisplayName + " is " + status,
+			Description: "Your " + alert.Data.Service.Name + " service is " + status + " at " + alert.Data.Alert.CreatedAt.Format("2006-01-02 15:04:05"),
+			Tags:        tags,
+			Status:      "trigger",
+			EventID:     strconv.Itoa(alert.Data.Alert.ID),
+		}
+	} else {
+		payload = models.SquadcastIncident{
+			Status:  "resolve",
+			EventID: strconv.Itoa(alert.Data.Alert.ID),
+		}
 	}
 
-	body, err := json.Marshal(a)
+	body, err := json.Marshal(payload)
 	if err != nil {
 		return err
 	}
