@@ -25,19 +25,10 @@ type Config struct {
 	} `yaml:"api"`
 
 	Notifier struct {
-		Test struct {
-			Address string `yaml:"address"`
-		} `yaml:"test"`
 		Squadcast struct {
-			Address string `yaml:"address"`
+			IsEnabled bool `yaml:"enable"`
+			Teams     map[string]string
 		} `yaml:"squadcast"`
-		Slack struct {
-			Address string `yaml:"address"`
-		} `yaml:"slack"`
-		Telegram struct {
-			ChatID string `yaml:"chat_id"`
-			Token  string `yaml:"token"`
-		} `yaml:"telegram"`
 	}
 }
 
@@ -61,5 +52,8 @@ func Load(configPath string) (*Config, error) {
 	}()
 	decoder := yaml.NewDecoder(f)
 	err = decoder.Decode(&cfg)
+
+	log.Info(cfg.Notifier.Squadcast)
+
 	return &cfg, err
 }
