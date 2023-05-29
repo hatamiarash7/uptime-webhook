@@ -39,7 +39,7 @@ jobs:
 
       - name: Build project
         run: |
-          go mod downlaod
+          go mod download
           make webhook
 
       - name: Build image
