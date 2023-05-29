@@ -2,6 +2,7 @@ package alert
 
 import (
 	"bytes"
+	"errors"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -30,6 +31,12 @@ func sendPOSTRequest(url string, payload []byte) (string, error) {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return "", err
+	}
+
+	if resp.StatusCode != http.StatusAccepted &&
+		resp.StatusCode != http.StatusOK &&
+		resp.StatusCode != http.StatusCreated {
+		return string(body), errors.New("Status code is: " + strconv.Itoa(resp.StatusCode))
 	}
 
 	return string(body), nil
