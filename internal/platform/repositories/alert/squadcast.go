@@ -34,6 +34,7 @@ func (r *AlertRepository) CreateSquadcastIncident(alert models.Alert) error {
 				log.WithError(err).Error("Error sending request to " + url)
 				return
 			}
+			log.Infof("Result: %s", result)
 			results <- result
 		}(url)
 	}
