@@ -65,7 +65,7 @@ func formatSquadcastMessage(alert models.Alert) models.SquadcastIncident {
 				"**Result:** " + alert.Data.Alert.ShortOutput + "\n",
 			Tags:      tags,
 			Status:    "trigger",
-			EventID:   strconv.Itoa(alert.Data.Alert.ID),
+			EventID:   strconv.Itoa(alert.Data.Device.ID),
 			Locations: strings.Join(alert.Data.Locations, ", "),
 			Retries:   strconv.Itoa(alert.Data.Service.MspNumRetries),
 			Type:      alert.Data.Service.MonitoringServiceType,
@@ -73,7 +73,7 @@ func formatSquadcastMessage(alert models.Alert) models.SquadcastIncident {
 	} else {
 		payload = models.SquadcastIncident{
 			Status:  "resolve",
-			EventID: strconv.Itoa(alert.Data.Alert.ID),
+			EventID: strconv.Itoa(alert.Data.Device.ID),
 		}
 	}
 
