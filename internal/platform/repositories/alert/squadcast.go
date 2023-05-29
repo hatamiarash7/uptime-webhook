@@ -2,7 +2,6 @@ package alert
 
 import (
 	"encoding/json"
-	"strconv"
 	"strings"
 	"sync"
 
@@ -19,33 +18,7 @@ func (r *AlertRepository) CreateSquadcastIncident(alert models.Alert) error {
 		urls = append(urls, r.config.Notifier.Squadcast.Teams[strings.ToLower(tag)])
 	}
 
-	var status string
-	if alert.Data.Alert.IsUp == false {
-		status = "down"
-	} else {
-		status = "up"
-	}
-
-	tags := map[string]models.SquadcastTag{
-		"state":     {Color: "#d6911a", Value: alert.Data.Alert.State},
-		"locations": {Color: "#1bab5c", Value: strings.Join(alert.Data.Locations, ", ")},
-	}
-
-	var payload models.SquadcastIncident
-	if alert.Event == "alert_raised" {
-		payload = models.SquadcastIncident{
-			Message:     "The " + alert.Data.Device.DisplayName + " is " + status,
-			Description: "Your " + alert.Data.Service.Name + " service is " + status + " at " + alert.Data.Alert.CreatedAt.Format("2006-01-02 15:04:05"),
-			Tags:        tags,
-			Status:      "trigger",
-			EventID:     strconv.Itoa(alert.Data.Alert.ID),
-		}
-	} else {
-		payload = models.SquadcastIncident{
-			Status:  "resolve",
-			EventID: strconv.Itoa(alert.Data.Alert.ID),
-		}
-	}
+	payload := formatSquadcastMessage(alert)
 
 	body, err := json.Marshal(payload)
 	if err != nil {
