@@ -44,23 +44,24 @@ func formatSquadcastMessage(alert models.Alert) models.SquadcastIncident {
 	}
 
 	tags := map[string]models.SquadcastTag{
-		"state":     {Color: "#d6911a", Value: alert.Data.Alert.State},
-		"locations": {Color: "#1bab5c", Value: strings.Join(alert.Data.Locations, ", ")},
+		"state": {Color: "#d6911a", Value: alert.Data.Alert.State},
 	}
 
 	var payload models.SquadcastIncident
 	if alert.Event == "alert_raised" {
 		payload = models.SquadcastIncident{
-			Message: "The " + alert.Data.Service.ShortName + " is " + status,
+			Message: "[" + alert.Data.Alert.State +
+				"] The \"" + alert.Data.Service.ShortName + "\" is " + status,
 			Description: "Your `" + alert.Data.Service.DisplayName +
 				"` service is " + status +
 				" at *" + alert.Data.Alert.CreatedAt.Format("2006-01-02 15:04:05") + "*\n\n" +
-				"**State:** " + alert.Data.Alert.State + "\n" +
-				"**Output:** " + alert.Data.Alert.ShortOutput + "\n" +
-				"**Retries:** " + strconv.Itoa(alert.Data.Service.MspNumRetries),
-			Tags:    tags,
-			Status:  "trigger",
-			EventID: strconv.Itoa(alert.Data.Alert.ID),
+				"**Result:** " + alert.Data.Alert.ShortOutput + "\n",
+			Tags:      tags,
+			Status:    "trigger",
+			EventID:   strconv.Itoa(alert.Data.Alert.ID),
+			Locations: strings.Join(alert.Data.Locations, ", "),
+			Retries:   strconv.Itoa(alert.Data.Service.MspNumRetries),
+			Type:      alert.Data.Service.MonitoringServiceType,
 		}
 	} else {
 		payload = models.SquadcastIncident{
