@@ -44,7 +44,7 @@ func formatSquadcastMessage(alert models.Alert) models.SquadcastIncident {
 	}
 
 	tags := map[string]models.SquadcastTag{
-		"state": {Color: "#d6911a", Value: alert.Data.Alert.State},
+		"state": getAlertColor(alert.Data.Alert.State),
 	}
 
 	var payload models.SquadcastIncident
@@ -71,4 +71,23 @@ func formatSquadcastMessage(alert models.Alert) models.SquadcastIncident {
 	}
 
 	return payload
+}
+
+func getAlertColor(state string) models.SquadcastTag {
+	var color string
+
+	switch state {
+	case "OK":
+		color = "#00D084"
+	case "WARNING":
+		color = "#FCB900"
+	case "CRITICAL":
+		color = "#EB144C"
+	case "INFO":
+		color = "#0693E3"
+	default:
+		color = "#ABB8C3"
+	}
+
+	return models.SquadcastTag{Color: color, Value: state}
 }
