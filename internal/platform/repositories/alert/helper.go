@@ -51,10 +51,10 @@ func formatSquadcastMessage(alert models.Alert) models.SquadcastIncident {
 	var payload models.SquadcastIncident
 	if alert.Event == "alert_raised" {
 		payload = models.SquadcastIncident{
-			Message: "The " + alert.Data.Device.DisplayName + " is " + status,
-			Description: "Your `" + alert.Data.Service.Name +
+			Message: "The " + alert.Data.Service.ShortName + " is " + status,
+			Description: "Your `" + alert.Data.Service.DisplayName +
 				"` service is " + status +
-				" at *" + alert.Data.Alert.CreatedAt.Format("2006-01-02 15:04:05") + "*\n" +
+				" at *" + alert.Data.Alert.CreatedAt.Format("2006-01-02 15:04:05") + "*\n\n" +
 				"**State:** " + alert.Data.Alert.State + "\n" +
 				"**Output:** " + alert.Data.Alert.ShortOutput + "\n" +
 				"**Retries:** " + strconv.Itoa(alert.Data.Service.MspNumRetries),
