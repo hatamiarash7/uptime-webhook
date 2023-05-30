@@ -11,6 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// IsAuthenticated is a gin middleware function for checking if the request is authenticated or not
 func IsAuthenticated(env configs.Environment, token string) gin.HandlerFunc {
 	return func(context *gin.Context) {
 		if len(token) == 0 || env.IsTesting() {

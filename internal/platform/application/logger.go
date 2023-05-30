@@ -8,7 +8,10 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+// SetupLogger sets up the logger for the application
 func SetupLogger(config *configs.Config) error {
+	log.Info("[Setup] Setup logger")
+
 	log.SetFormatter(&log.JSONFormatter{
 		TimestampFormat:  time.RFC3339,
 		DisableTimestamp: false,
@@ -36,6 +39,7 @@ func SetupLogger(config *configs.Config) error {
 	sentryHook.StacktraceConfiguration.Enable = true
 	sentryHook.SetRelease(Version)
 	log.AddHook(sentryHook)
+
 	return nil
 }
 

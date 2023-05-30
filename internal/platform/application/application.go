@@ -61,6 +61,8 @@ func (a *App) RunHttpServer(ctx context.Context, wg *sync.WaitGroup) {
 }
 
 func (a *App) registerRouter() {
+	log.Info("[Setup] Register router")
+
 	switch a.configs.App.Env {
 	case configs.Testing:
 		gin.SetMode(gin.TestMode)
@@ -73,7 +75,9 @@ func (a *App) registerRouter() {
 	a.Router = gin.Default()
 }
 
+// NewApplication creates a new application instance
 func NewApplication(_ context.Context, config *configs.Config) (*App, error) {
+	log.Info("[Setup] Create new application")
 	app := &App{configs: *config}
 
 	app.registerRepositories()

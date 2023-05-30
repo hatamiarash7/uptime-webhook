@@ -17,14 +17,15 @@ import (
 var config *configs.Config
 
 func init() {
+	log.Info("[Setup] Loading configs")
 	cfg, err := configs.Load("configs/config.yml")
 	if err != nil {
-		log.WithError(err).Fatal("failed to load configs")
+		log.WithError(err).Fatal("Failed to load configs")
 	}
 	config = cfg
 
 	if err = application.SetupLogger(cfg); err != nil {
-		log.WithError(err).Fatal("failed to setup logger")
+		log.WithError(err).Fatal("Failed to setup logger")
 	}
 }
 
@@ -34,7 +35,7 @@ func main() {
 
 	app, err := application.NewApplication(ctx, config)
 	if err != nil {
-		log.WithError(err).Fatal("could not initialize application")
+		log.WithError(err).Fatal("Could not initialize application")
 	}
 
 	app.RunHttpServer(ctx, wg)
@@ -53,6 +54,6 @@ func main() {
 	wg.Wait()
 
 	if err = app.Shutdown(); err != nil {
-		log.WithError(err).Panic("application shutdown encountered error")
+		log.WithError(err).Panic("Application shutdown encountered error")
 	}
 }

@@ -9,12 +9,14 @@ import (
 	"strings"
 
 	"github.com/arvancloud/uptime-webhook/internal/models"
+	log "github.com/sirupsen/logrus"
 )
 
 func sendPOSTRequest(url string, payload []byte) (string, error) {
 	// Create a new POST request
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(payload))
 	if err != nil {
+		log.WithError(err).Error("[HTTP] Error creating new request")
 		return "", err
 	}
 
@@ -23,6 +25,7 @@ func sendPOSTRequest(url string, payload []byte) (string, error) {
 	req.Header.Add("Content-Type", "application/json")
 	resp, err := client.Do(req)
 	if err != nil {
+		log.WithError(err).Error("[HTTP] Error sending request")
 		return "", err
 	}
 	defer resp.Body.Close()
@@ -30,13 +33,14 @@ func sendPOSTRequest(url string, payload []byte) (string, error) {
 	// Read the response body
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
+		log.WithError(err).Error("[HTTP] Error reading response body")
 		return "", err
 	}
 
 	if resp.StatusCode != http.StatusAccepted &&
 		resp.StatusCode != http.StatusOK &&
 		resp.StatusCode != http.StatusCreated {
-		return string(body), errors.New("Status code is: " + strconv.Itoa(resp.StatusCode))
+		return string(body), errors.New("[HTTP] Status code is: " + strconv.Itoa(resp.StatusCode))
 	}
 
 	return string(body), nil

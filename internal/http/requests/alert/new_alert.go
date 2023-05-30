@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// CreateAlertRequest is a request model for creating an alert
 type CreateAlertRequest struct {
 	Event string `json:"event" binding:"required"`
 	Data  struct {
@@ -93,6 +94,7 @@ type CreateAlertRequest struct {
 	} `json:"data,omitempty" binding:"required"`
 }
 
+// String returns the string representation of the model
 func (h *CreateAlertRequest) String() string {
 	b, _ := json.Marshal(h)
 	return string(b)

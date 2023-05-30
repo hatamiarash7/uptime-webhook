@@ -8,6 +8,7 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
+// Config is the struct that holds all the configuration of the application
 type Config struct {
 	App struct {
 		Env Environment `yaml:"env"`
@@ -32,6 +33,7 @@ type Config struct {
 	}
 }
 
+// Load will loads the configuration from the given path
 func Load(configPath string) (*Config, error) {
 	var cfg Config
 	absPath, err := filepath.Abs(configPath)
