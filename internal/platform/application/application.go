@@ -14,6 +14,7 @@ import (
 )
 
 var (
+	// Version is the application version
 	Version = "DEV"
 )
 
@@ -32,8 +33,8 @@ func (a *App) Shutdown() (err error) {
 	return nil
 }
 
-// RunHttpServer runs the http server
-func (a *App) RunHttpServer(ctx context.Context, wg *sync.WaitGroup) {
+// RunHTTPServer runs the http server
+func (a *App) RunHTTPServer(ctx context.Context, wg *sync.WaitGroup) {
 	wg.Add(1)
 
 	go func() {

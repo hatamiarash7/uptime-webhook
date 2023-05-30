@@ -38,7 +38,7 @@ func main() {
 		log.WithError(err).Fatal("Could not initialize application")
 	}
 
-	app.RunHttpServer(ctx, wg)
+	app.RunHTTPServer(ctx, wg)
 
 	closeSignal := make(chan os.Signal, 1)
 	signal.Notify(closeSignal, syscall.SIGTERM, syscall.SIGINT, os.Interrupt)
