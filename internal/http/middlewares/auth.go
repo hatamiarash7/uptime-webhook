@@ -41,7 +41,7 @@ func IsAuthenticated(env configs.Environment, token string) gin.HandlerFunc {
 
 func getAuthorization(k string) (string, error) {
 	if !strings.Contains(k, "Bearer ") && !strings.Contains(k, "bearer ") {
-		return "", errors.New("bearer keyword not found")
+		return "", errors.New("[AUTH] The bearer keyword not found")
 	}
 
 	t := strings.Replace(k, "bearer ", "", 1)

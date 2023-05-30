@@ -47,7 +47,7 @@ func (a *App) RunHTTPServer(ctx context.Context, wg *sync.WaitGroup) {
 
 		go func() {
 			if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-				log.WithError(err).Fatal(err.Error())
+				log.WithError(err).Fatal("[HTTP] " + err.Error())
 			}
 		}()
 
@@ -57,7 +57,7 @@ func (a *App) RunHTTPServer(ctx context.Context, wg *sync.WaitGroup) {
 		defer cancel()
 
 		if err := server.Shutdown(shutdownCTX); err != nil {
-			log.WithContext(ctx).WithError(err).Error("could not gracefully shutdown the http server")
+			log.WithContext(ctx).WithError(err).Error("[HTTP] Could not gracefully shutdown the http server")
 		}
 
 		log.Debug("[HTTP] Server successfully closed")
@@ -65,7 +65,7 @@ func (a *App) RunHTTPServer(ctx context.Context, wg *sync.WaitGroup) {
 }
 
 func (a *App) registerRouter() {
-	log.Info("[Setup] Register router")
+	log.Info("[SETUP] Register router")
 
 	switch a.configs.App.Env {
 	case configs.Testing:
@@ -81,7 +81,7 @@ func (a *App) registerRouter() {
 
 // NewApplication creates a new application instance
 func NewApplication(_ context.Context, config *configs.Config) (*App, error) {
-	log.Info("[Setup] Create new application")
+	log.Info("[SETUP] Create new application")
 	app := &App{configs: *config}
 
 	app.registerRepositories()

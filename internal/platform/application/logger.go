@@ -10,7 +10,7 @@ import (
 
 // SetupLogger sets up the logger for the application
 func SetupLogger(config *configs.Config) error {
-	log.Info("[Setup] Setup logger")
+	log.Info("[SETUP] Setup logger")
 
 	log.SetFormatter(&log.JSONFormatter{
 		TimestampFormat:  time.RFC3339,

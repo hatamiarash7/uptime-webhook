@@ -6,7 +6,7 @@ import (
 )
 
 func (a *App) registerRepositories() {
-	log.Info("[Setup] Register repositories")
+	log.Info("[SETUP] Register repositories")
 	a.registerAlertRepository()
 }
 

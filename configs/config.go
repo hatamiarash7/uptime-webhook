@@ -48,14 +48,12 @@ func Load(configPath string) (*Config, error) {
 	defer func() {
 		if f != nil {
 			if err = f.Close(); err != nil {
-				log.WithError(err).Error("error closing file")
+				log.WithError(err).Error("[SETUP] Error closing file")
 			}
 		}
 	}()
 	decoder := yaml.NewDecoder(f)
 	err = decoder.Decode(&cfg)
-
-	log.Info(cfg.Notifier.Squadcast)
 
 	return &cfg, err
 }

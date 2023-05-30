@@ -32,10 +32,10 @@ func (r *AlertRepository) CreateSquadcastIncident(alert models.Alert) error {
 			defer wg.Done()
 			result, err := sendPOSTRequest(url, body)
 			if err != nil {
-				log.WithError(err).Error("[Squadcast] Error sending request to " + url)
+				log.WithError(err).Error("[SQUADCAST] Error sending request to " + url)
 				return
 			}
-			log.Debugf("Result: %s", result)
+			log.Debugf("[SQUADCAST] Result: %s", result)
 			results <- result
 		}(url)
 	}

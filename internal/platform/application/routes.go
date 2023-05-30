@@ -9,7 +9,7 @@ import (
 )
 
 func (a *App) registerRoutes() {
-	log.Info("[Setup] Register routes")
+	log.Info("[SETUP] Register routes")
 
 	a.registerMonitoringRoutes()
 
@@ -27,7 +27,7 @@ func (a *App) registerRoutes() {
 
 func (a *App) registerMonitoringRoutes() {
 	if !a.configs.App.Env.IsTesting() {
-		log.Info("[Setup] Register monitoring routes")
+		log.Info("[SETUP] Register monitoring routes")
 		a.Router.GET("/metrics", gin.WrapH(promhttp.Handler()))
 	}
 }
