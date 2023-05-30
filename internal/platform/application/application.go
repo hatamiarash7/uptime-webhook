@@ -17,6 +17,7 @@ var (
 	Version = "DEV"
 )
 
+// App is the main application
 type App struct {
 	configs configs.Config
 	Router  *gin.Engine
@@ -26,10 +27,12 @@ type App struct {
 	}
 }
 
+// Shutdown is used to gracefully shutdown the application
 func (a *App) Shutdown() (err error) {
 	return nil
 }
 
+// RunHttpServer runs the http server
 func (a *App) RunHttpServer(ctx context.Context, wg *sync.WaitGroup) {
 	wg.Add(1)
 
@@ -56,7 +59,7 @@ func (a *App) RunHttpServer(ctx context.Context, wg *sync.WaitGroup) {
 			log.WithContext(ctx).WithError(err).Error("could not gracefully shutdown the http server")
 		}
 
-		log.Debug("http server successfully closed")
+		log.Debug("[HTTP] Server successfully closed")
 	}()
 }
 
