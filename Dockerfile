@@ -18,6 +18,7 @@ FROM --platform=${TARGETPLATFORM:-linux/amd64} scratch
 
 ARG DATE_CREATED
 ARG APP_VERSION
+ENV APP_VERSION=$APP_VERSION
 
 LABEL org.opencontainers.image.created=$DATE_CREATED
 LABEL org.opencontainers.version="$APP_VERSION"
