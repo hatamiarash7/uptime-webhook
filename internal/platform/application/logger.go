@@ -1,6 +1,7 @@
 package application
 
 import (
+	"os"
 	"time"
 
 	"github.com/arvancloud/uptime-webhook/configs"
@@ -33,6 +34,13 @@ func SetupLogger(config *configs.Config) error {
 	if err != nil {
 		return err
 	}
+
+	Version, ok := os.LookupEnv("APP_VERSION")
+	if !ok {
+		Version = "unknown"
+	}
+
+	log.Debugf("[SETUP] Running version: %s", Version)
 
 	sentryHook.Timeout = time.Second * 10
 	sentryHook.SetEnvironment(string(config.App.Env))

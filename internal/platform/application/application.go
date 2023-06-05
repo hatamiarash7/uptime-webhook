@@ -13,11 +13,6 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-var (
-	// Version is the application version
-	Version = "DEV"
-)
-
 // App is the main application
 type App struct {
 	configs configs.Config
