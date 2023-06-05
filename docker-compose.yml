@@ -2,12 +2,7 @@ version: "3.9"
 
 services:
   webhook:
-    image: r1cloud/uptime-webhook:latest
-    build:
-      dockerfile: Dockerfile
-      context: .
-      tags:
-        - docker.io/r1cloud/uptime-webhook:latest
+    image: hatamiarash7/uptime-webhook
     container_name: uptime-webhook
     restart: unless-stopped
     ports:
