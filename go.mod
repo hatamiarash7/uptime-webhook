@@ -7,7 +7,7 @@ require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-playground/validator/v10 v10.14.1
 	github.com/prometheus/client_golang v1.15.1
-	github.com/sirupsen/logrus v1.9.2
+	github.com/sirupsen/logrus v1.9.3
 	gopkg.in/yaml.v3 v3.0.1
 )
 
