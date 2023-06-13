@@ -21,12 +21,17 @@ ARG APP_VERSION
 
 LABEL org.opencontainers.image.created=$DATE_CREATED
 LABEL org.opencontainers.version="$APP_VERSION"
+LABEL org.opencontainers.image.authors="hatamiarash7"
+LABEL org.opencontainers.image.vendor="hatamiarash7"
 LABEL org.opencontainers.image.title="uptime-webhook"
 LABEL org.opencontainers.image.description="It's webhook handler for uptime.com"
+LABEL org.opencontainers.image.source="https://github.com/hatamiarash7/uptime-webhook"
 
 WORKDIR /app/
 
 COPY --from=builder /app/webhook /app/webhook
 COPY --from=certs /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+
+EXPOSE 8080
 
 ENTRYPOINT ["/app/webhook"]
