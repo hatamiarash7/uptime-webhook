@@ -3,12 +3,12 @@ package action
 import (
 	"net/http"
 
-	"github.com/arvancloud/uptime-webhook/internal/http/requests"
-	alert_requests "github.com/arvancloud/uptime-webhook/internal/http/requests/alert"
-	"github.com/arvancloud/uptime-webhook/internal/http/resources"
-	"github.com/arvancloud/uptime-webhook/internal/platform/repositories/contracts"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
+	"github.com/hatamiarash7/uptime-webhook/internal/http/requests"
+	alert_requests "github.com/hatamiarash7/uptime-webhook/internal/http/requests/alert"
+	"github.com/hatamiarash7/uptime-webhook/internal/http/resources"
+	"github.com/hatamiarash7/uptime-webhook/internal/platform/repositories/contracts"
 	log "github.com/sirupsen/logrus"
 )
 

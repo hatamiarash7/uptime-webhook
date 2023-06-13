@@ -3,7 +3,7 @@ package contracts
 import (
 	"context"
 
-	"github.com/arvancloud/uptime-webhook/internal/models"
+	"github.com/hatamiarash7/uptime-webhook/internal/models"
 )
 
 // AlertRepository is an interface for alert repository

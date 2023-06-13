@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/arvancloud/uptime-webhook/configs"
-	"github.com/arvancloud/uptime-webhook/internal/http/resources"
+	"github.com/hatamiarash7/uptime-webhook/configs"
+	"github.com/hatamiarash7/uptime-webhook/internal/http/resources"
 
 	"github.com/gin-gonic/gin"
 )

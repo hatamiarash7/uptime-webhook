@@ -1,9 +1,9 @@
 package application
 
 import (
-	alertActions "github.com/arvancloud/uptime-webhook/internal/http/actions"
-	"github.com/arvancloud/uptime-webhook/internal/http/middlewares"
 	"github.com/gin-gonic/gin"
+	alertActions "github.com/hatamiarash7/uptime-webhook/internal/http/actions"
+	"github.com/hatamiarash7/uptime-webhook/internal/http/middlewares"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	log "github.com/sirupsen/logrus"
 )

@@ -1,8 +1,8 @@
 package action
 
 import (
-	requests "github.com/arvancloud/uptime-webhook/internal/http/requests/alert"
-	"github.com/arvancloud/uptime-webhook/internal/models"
+	requests "github.com/hatamiarash7/uptime-webhook/internal/http/requests/alert"
+	"github.com/hatamiarash7/uptime-webhook/internal/models"
 )
 
 func transformRequestToValue(c requests.CreateAlertRequest) models.Alert {

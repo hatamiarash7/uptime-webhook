@@ -4,8 +4,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/arvancloud/uptime-webhook/configs"
 	"github.com/evalphobia/logrus_sentry"
+	"github.com/hatamiarash7/uptime-webhook/configs"
 	log "github.com/sirupsen/logrus"
 )
 

@@ -1,7 +1,7 @@
 package application
 
 import (
-	"github.com/arvancloud/uptime-webhook/internal/platform/repositories/alert"
+	"github.com/hatamiarash7/uptime-webhook/internal/platform/repositories/alert"
 	log "github.com/sirupsen/logrus"
 )
 

@@ -4,8 +4,8 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/arvancloud/uptime-webhook/configs"
-	"github.com/arvancloud/uptime-webhook/internal/models"
+	"github.com/hatamiarash7/uptime-webhook/configs"
+	"github.com/hatamiarash7/uptime-webhook/internal/models"
 )
 
 // AlertRepository is an interface for alert repository

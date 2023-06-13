@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/arvancloud/uptime-webhook/internal/models"
+	"github.com/hatamiarash7/uptime-webhook/internal/models"
 	log "github.com/sirupsen/logrus"
 )
 

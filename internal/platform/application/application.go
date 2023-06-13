@@ -6,9 +6,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/arvancloud/uptime-webhook/configs"
-	"github.com/arvancloud/uptime-webhook/internal/platform/repositories/contracts"
 	"github.com/gin-gonic/gin"
+	"github.com/hatamiarash7/uptime-webhook/configs"
+	"github.com/hatamiarash7/uptime-webhook/internal/platform/repositories/contracts"
 
 	log "github.com/sirupsen/logrus"
 )

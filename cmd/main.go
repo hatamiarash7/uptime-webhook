@@ -9,8 +9,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/arvancloud/uptime-webhook/configs"
-	"github.com/arvancloud/uptime-webhook/internal/platform/application"
+	"github.com/hatamiarash7/uptime-webhook/configs"
+	"github.com/hatamiarash7/uptime-webhook/internal/platform/application"
 	log "github.com/sirupsen/logrus"
 )
 
