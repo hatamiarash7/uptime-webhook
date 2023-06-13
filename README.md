@@ -1,5 +1,9 @@
 # Uptime webhook handler
 
+[![Release][release_badge]][release_link]
+[![License][badge_license]][link_license]
+[![Image size][badge_size_latest]][link_docker_hub]
+
 It's webhook handler for [uptime.com](https://uptime.com). You can define multiple teams and multiple notifiers for each team.
 
 1. Uptime.com will monitor our targets ( HTTP/S - ICMP - DNS - API - ... )
@@ -78,3 +82,10 @@ Don't be shy and reach out to us if you want to contribute 😉
 ## Issues
 
 Each project may have many problems. Contributing to the better development of this project by reporting them. 👍
+
+[release_badge]: https://github.com/hatamiarash7/uptime-webhook/actions/workflows/docker.yml/badge.svg
+[release_link]: https://github.com/hatamiarash7/uptime-webhook/actions/workflows/docker.yaml
+[link_license]: https://github.com/hatamiarash7/uptime-webhook/blob/master/LICENSE
+[badge_license]: https://img.shields.io/github/license/hatamiarash7/uptime-webhook.svg?longCache=true
+[badge_size_latest]: https://img.shields.io/docker/image-size/hatamiarash7/uptime-webhook/latest?maxAge=30
+[link_docker_hub]: https://hub.docker.com/r/hatamiarash7/uptime-webhook/
