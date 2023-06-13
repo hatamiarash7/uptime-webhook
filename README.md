@@ -1,6 +1,6 @@
 # Uptime webhook handler
 
-It's webhook handler for [uptime.com](https://uptime.com).
+It's webhook handler for [uptime.com](https://uptime.com). You can define multiple teams and multiple notifiers for each team.
 
 ## Installation
 
@@ -13,7 +13,7 @@ It's webhook handler for [uptime.com](https://uptime.com).
        --name uptime-webhook \
        -p 8080:8080 \
        -v /path/to/config.yml:/config/config.yml \
-       r1cloud/uptime-webhook:latest
+       hatamiarash7/uptime-webhook:latest
    ```
 
 4. Go to Uptime dashboard and create a new webhook in *Notifications / Integrations* section.
@@ -29,9 +29,14 @@ It's webhook handler for [uptime.com](https://uptime.com).
 
 You can use multiple notifiers at the same time. Just define them to the `config.yml` file.
 
+- [x] Squadcast
+- [ ] Telegram ( WIP )
+- [ ] Slack ( WIP )
+- [ ] Webhook ( WIP )
+
 ### Squadcast
 
-1. Create a new Service in Squadcast
+1. Create a new Service in Squadcast ( Or use an existing one )
 2. Use `Incident Webhook` as an alert source
 3. Define that in `config.yml` file
 
@@ -41,11 +46,22 @@ You can use multiple notifiers at the same time. Just define them to the `config
            enable: true
            teams:
                team1: "<WEBHOOK-URL>"
+               team2: "<WEBHOOK-URL>"
    ```
 
-## Contributing
+---
 
-Don't be shy and reach out to us if you want to contribute. 😉
+## Support 💛
+
+[![Donate with Bitcoin](https://en.cryptobadges.io/badge/micro/bc1qmmh6vt366yzjt3grjxjjqynrrxs3frun8gnxrz)](https://en.cryptobadges.io/donate/bc1qmmh6vt366yzjt3grjxjjqynrrxs3frun8gnxrz) [![Donate with Ethereum](https://en.cryptobadges.io/badge/micro/0x0831bD72Ea8904B38Be9D6185Da2f930d6078094)](https://en.cryptobadges.io/donate/0x0831bD72Ea8904B38Be9D6185Da2f930d6078094)
+
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D1WGU9)
+
+<div><a href="https://payping.ir/@hatamiarash7"><img src="https://cdn.payping.ir/statics/Payping-logo/Trust/blue.svg" height="128" width="128"></a></div>
+
+## Contributing 🤝
+
+Don't be shy and reach out to us if you want to contribute 😉
 
 1. Fork it!
 2. Create your feature branch: `git checkout -b my-new-feature`
