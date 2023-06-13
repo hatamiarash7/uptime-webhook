@@ -1,6 +1,7 @@
 package application
 
 import (
+	"os"
 	"time"
 
 	"github.com/arvancloud/uptime-webhook/configs"
@@ -8,7 +9,10 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+// SetupLogger sets up the logger for the application
 func SetupLogger(config *configs.Config) error {
+	log.Info("[SETUP] Setup logger")
+
 	log.SetFormatter(&log.JSONFormatter{
 		TimestampFormat:  time.RFC3339,
 		DisableTimestamp: false,
@@ -31,11 +35,19 @@ func SetupLogger(config *configs.Config) error {
 		return err
 	}
 
+	Version, ok := os.LookupEnv("APP_VERSION")
+	if !ok {
+		Version = "unknown"
+	}
+
+	log.Debugf("[SETUP] Running version: %s", Version)
+
 	sentryHook.Timeout = time.Second * 10
 	sentryHook.SetEnvironment(string(config.App.Env))
 	sentryHook.StacktraceConfiguration.Enable = true
 	sentryHook.SetRelease(Version)
 	log.AddHook(sentryHook)
+
 	return nil
 }
 

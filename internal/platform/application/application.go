@@ -13,10 +13,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-var (
-	Version = "DEV"
-)
-
+// App is the main application
 type App struct {
 	configs configs.Config
 	Router  *gin.Engine
@@ -26,11 +23,13 @@ type App struct {
 	}
 }
 
+// Shutdown is used to gracefully shutdown the application
 func (a *App) Shutdown() (err error) {
 	return nil
 }
 
-func (a *App) RunHttpServer(ctx context.Context, wg *sync.WaitGroup) {
+// RunHTTPServer runs the http server
+func (a *App) RunHTTPServer(ctx context.Context, wg *sync.WaitGroup) {
 	wg.Add(1)
 
 	go func() {
@@ -43,7 +42,7 @@ func (a *App) RunHttpServer(ctx context.Context, wg *sync.WaitGroup) {
 
 		go func() {
 			if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-				log.WithError(err).Fatal(err.Error())
+				log.WithError(err).Fatal("[HTTP] " + err.Error())
 			}
 		}()
 
@@ -53,14 +52,16 @@ func (a *App) RunHttpServer(ctx context.Context, wg *sync.WaitGroup) {
 		defer cancel()
 
 		if err := server.Shutdown(shutdownCTX); err != nil {
-			log.WithContext(ctx).WithError(err).Error("could not gracefully shutdown the http server")
+			log.WithContext(ctx).WithError(err).Error("[HTTP] Could not gracefully shutdown the http server")
 		}
 
-		log.Debug("http server successfully closed")
+		log.Debug("[HTTP] Server successfully closed")
 	}()
 }
 
 func (a *App) registerRouter() {
+	log.Info("[SETUP] Register router")
+
 	switch a.configs.App.Env {
 	case configs.Testing:
 		gin.SetMode(gin.TestMode)
@@ -73,7 +74,9 @@ func (a *App) registerRouter() {
 	a.Router = gin.Default()
 }
 
+// NewApplication creates a new application instance
 func NewApplication(_ context.Context, config *configs.Config) (*App, error) {
+	log.Info("[SETUP] Create new application")
 	app := &App{configs: *config}
 
 	app.registerRepositories()

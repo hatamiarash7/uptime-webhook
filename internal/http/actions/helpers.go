@@ -93,5 +93,6 @@ func transformRequestToValue(c requests.CreateAlertRequest) models.Alert {
 			},
 		},
 	}
+
 	return h
 }

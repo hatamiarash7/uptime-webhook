@@ -17,14 +17,15 @@ import (
 var config *configs.Config
 
 func init() {
+	log.Info("[SETUP] Loading configs")
 	cfg, err := configs.Load("configs/config.yml")
 	if err != nil {
-		log.WithError(err).Fatal("failed to load configs")
+		log.WithError(err).Fatal("[SETUP] Failed to load configs")
 	}
 	config = cfg
 
 	if err = application.SetupLogger(cfg); err != nil {
-		log.WithError(err).Fatal("failed to setup logger")
+		log.WithError(err).Fatal("[SETUP] Failed to setup logger")
 	}
 }
 
@@ -34,18 +35,18 @@ func main() {
 
 	app, err := application.NewApplication(ctx, config)
 	if err != nil {
-		log.WithError(err).Fatal("could not initialize application")
+		log.WithError(err).Fatal("[SETUP] Could not initialize application")
 	}
 
-	app.RunHttpServer(ctx, wg)
+	app.RunHTTPServer(ctx, wg)
 
 	closeSignal := make(chan os.Signal, 1)
 	signal.Notify(closeSignal, syscall.SIGTERM, syscall.SIGINT, os.Interrupt)
 	select {
 	case <-closeSignal:
-		log.Info("Terminating by os signal")
+		log.Info("[APP] Terminating by os signal")
 	case <-ctx.Done():
-		log.Info("Terminating by context cancellation")
+		log.Info("[APP] Terminating by context cancellation")
 	}
 
 	time.Sleep(time.Duration(1000) * time.Millisecond)
@@ -53,6 +54,6 @@ func main() {
 	wg.Wait()
 
 	if err = app.Shutdown(); err != nil {
-		log.WithError(err).Panic("application shutdown encountered error")
+		log.WithError(err).Panic("[APP] Application shutdown encountered error")
 	}
 }

@@ -1,5 +1,6 @@
 package models
 
+// SquadcastIncident is a struct for Squadcast incident
 type SquadcastIncident struct {
 	Message     string                  `json:"message,omitempty"`
 	Description string                  `json:"description,omitempty"`
@@ -11,6 +12,7 @@ type SquadcastIncident struct {
 	Type        string                  `json:"type"`
 }
 
+// SquadcastTag is a struct for Squadcast tag
 type SquadcastTag struct {
 	Color string `json:"color"`
 	Value string `json:"value"`

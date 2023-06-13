@@ -5,9 +5,12 @@ import (
 	"github.com/arvancloud/uptime-webhook/internal/http/middlewares"
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	log "github.com/sirupsen/logrus"
 )
 
 func (a *App) registerRoutes() {
+	log.Info("[SETUP] Register routes")
+
 	a.registerMonitoringRoutes()
 
 	api := a.Router.Group("/api")
@@ -24,6 +27,7 @@ func (a *App) registerRoutes() {
 
 func (a *App) registerMonitoringRoutes() {
 	if !a.configs.App.Env.IsTesting() {
+		log.Info("[SETUP] Register monitoring routes")
 		a.Router.GET("/metrics", gin.WrapH(promhttp.Handler()))
 	}
 }
