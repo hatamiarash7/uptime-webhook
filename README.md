@@ -2,6 +2,12 @@
 
 It's webhook handler for [uptime.com](https://uptime.com). You can define multiple teams and multiple notifiers for each team.
 
+1. Uptime.com will monitor our targets ( HTTP/S - ICMP - DNS - API - ... )
+2. Notify our webhook after making a decision
+3. Our webhook handler will send the final alert based on teams and any enabled platform.
+
+![design](.github/design.jpeg)
+
 ## Installation
 
 1. Create your configuration file. You can use [`config.yml.example`](./configs/config.yml.example) as a template.
