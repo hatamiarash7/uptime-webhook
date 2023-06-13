@@ -1,4 +1,4 @@
-module github.com/arvancloud/uptime-webhook
+module github.com/hatamiarash7/uptime-webhook
 
 go 1.20
 
