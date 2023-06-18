@@ -8,4 +8,4 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - ./configs/config.yml:/configs/config.yml
+      - ./configs/config.yml:/app/configs/config.yml
