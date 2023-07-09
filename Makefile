@@ -9,6 +9,7 @@ IS_CI?=FALSE
 .DEFAULT_GOAL := help
 
 ##################################### Binary #####################################
+
 pre: ## Create the bin directory
 	mkdir -p $(BIN_DIR)
 
