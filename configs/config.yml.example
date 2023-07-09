@@ -21,13 +21,15 @@ notifier:
   squadcast:
     enable: true
     teams:
-      A: ""
-      B: ""
-      C: ""
+      team1: ""
+      team2: ""
   telegram:
     enable: true
     host: "https://api.telegram.org/bot"
     teams:
-      A:
+      team1:
         - token: "1234:ABCD"
           chat: "-123456789"
+      team2:
+        - token: "6453:ABCD"
+          chat: "-124564"
