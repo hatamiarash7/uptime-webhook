@@ -1,17 +1,17 @@
 app:
   env: "local"
   log:
-  level: debug
-  pretty_print: true
-  sentry_dsn: ""
-  sentry_log_levels:
-    - "info"
-    - "warn"
-    - "error"
-    - "debug"
-    - "fatal"
-    - "panic"
-    - "trace"
+    level: debug
+    pretty_print: true
+    sentry_dsn: ""
+    sentry_log_levels:
+      - "info"
+      - "warn"
+      - "error"
+      - "debug"
+      - "fatal"
+      - "panic"
+      - "trace"
 
 api:
   address: "127.0.0.1:8000"
@@ -21,6 +21,13 @@ notifier:
   squadcast:
     enable: true
     teams:
-      cdn: ""
-      iaas: ""
-      digital: ""
+      A: ""
+      B: ""
+      C: ""
+  telegram:
+    enable: true
+    host: "https://api.telegram.org/bot"
+    teams:
+      A:
+        - token: "1234:ABCD"
+          chat: "-123456789"

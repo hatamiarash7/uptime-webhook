@@ -30,7 +30,17 @@ type Config struct {
 			IsEnabled bool `yaml:"enable"`
 			Teams     map[string]string
 		} `yaml:"squadcast"`
+		Telegram struct {
+			IsEnabled bool                      `yaml:"enable"`
+			Host      string                    `yaml:"host"`
+			Teams     map[string][]TelegramTeam `yaml:"teams"`
+		} `yaml:"telegram"`
 	}
+}
+
+type TelegramTeam struct {
+	Token string `yaml:"token"`
+	Chat  string `yaml:"chat"`
 }
 
 // Load will loads the configuration from the given path
