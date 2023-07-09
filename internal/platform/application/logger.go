@@ -37,7 +37,11 @@ func SetupLogger(config *configs.Config) error {
 
 	Version, ok := os.LookupEnv("APP_VERSION")
 	if !ok {
-		Version = "unknown"
+		if config.App.Env.IsLocal() {
+			Version = "local"
+		} else {
+			Version = "unknown"
+		}
 	}
 
 	log.Debugf("[SETUP] Running version: %s", Version)
