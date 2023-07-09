@@ -102,3 +102,41 @@ func getAlertColor(state string) models.SquadcastTag {
 
 	return models.SquadcastTag{Color: color, Value: state}
 }
+
+func formatTelegramMessage(alert models.Alert) models.TelegramMessage {
+	var text string
+
+	if alert.Event == "alert_raised" {
+		text = "🔥 *Alert - " + alert.Data.Alert.State + "*\n\n"
+		text += "📌 *Source:* Uptime\n\n"
+		text += "🏷 *Title:* The \"" + alert.Data.Service.ShortName + "\" is down\n\n"
+		text += "📄 *Description:* Your `" + alert.Data.Service.DisplayName +
+			"` service is down" +
+			" at *" + alert.Data.Alert.CreatedAt.Format("2006-01-02 15:04:05") + "*\n\n" +
+			"🔍 *Result:* " + alert.Data.Alert.ShortOutput + "\n"
+
+	} else {
+		text = "✅ *Resolved*\n\n"
+		text += "📌 *Source:* Uptime\n\n"
+		text += "🏷 *Title:* The \"" + alert.Data.Service.ShortName + "\" is up\n\n"
+		text += "⏱️ *Time:* " + alert.Data.Date.Format("2006-01-02 15:04:05") + "\n\n"
+	}
+
+	payload := models.TelegramMessage{
+		Text: escapeMarkdown(text),
+	}
+
+	return payload
+}
+
+func escapeMarkdown(text string) string {
+	markdownChars := []string{"_", "`", "[", "]", "(", ")", "~", ">", "#", "+", "-", "=", "|", "{", "}", ".", "!"}
+	escapedChars := []string{"\\_", "\\`", "\\[", "\\]", "\\(", "\\)", "\\~", "\\>", "\\#", "\\+", "\\-", "\\=", "\\|", "\\{", "\\}", "\\.", "\\!"}
+
+	escapedText := text
+	for i := 0; i < len(markdownChars); i++ {
+		escapedText = strings.ReplaceAll(escapedText, markdownChars[i], escapedChars[i])
+	}
+
+	return escapedText
+}

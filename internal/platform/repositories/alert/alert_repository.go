@@ -25,7 +25,15 @@ func NewAlertRepository(c configs.Config) *AlertRepository {
 // CreateAlert creates an alert
 func (r *AlertRepository) CreateAlert(ctx context.Context, alert models.Alert) error {
 	if r.config.Notifier.Squadcast.IsEnabled {
-		return r.CreateSquadcastIncident(alert)
+		if err := r.CreateSquadcastIncident(alert); err != nil {
+			return err
+		}
+	}
+
+	if r.config.Notifier.Telegram.IsEnabled {
+		if err := r.CreateTelegramMessage(alert); err != nil {
+			return err
+		}
 	}
 
 	return nil
