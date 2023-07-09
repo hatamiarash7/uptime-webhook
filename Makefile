@@ -5,7 +5,7 @@ SOURCES=$(shell find . -name '*.go' -not -name '*_test.go' -not -name "main.go")
 EXPORT_RESULT?=FALSE
 IS_CI?=FALSE
 
-.PHONY: pre clean webhook run format lint-docker lint-go lint-yaml goconvey test coverage help
+.PHONY: pre clean build run format lint-docker lint-go lint-yaml goconvey test coverage help
 .DEFAULT_GOAL := help
 
 ##################################### Binary #####################################
@@ -17,7 +17,7 @@ clean: ## Clean the bin directory
 	rm -rf $(BIN_DIR)
 	rm -f ./checkstyle-report.xml checkstyle-report.xml yamllint-checkstyle.xml
 
-webhook: pre ## Create the main binary
+build: pre ## Create the main binary
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 $(GOCMD) build -ldflags="-s -w" -o bin/webhook cmd/*.go
 
 run: ## Run the application
