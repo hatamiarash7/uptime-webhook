@@ -41,7 +41,8 @@ type Config struct {
 
 // TelegramTeam is a struct for Telegram team configuration
 type TelegramTeam struct {
-	Chat string `yaml:"chat"`
+	Chat  string `yaml:"chat"`
+	Topic string `yaml:"topic"`
 }
 
 // Load will loads the configuration from the given path
