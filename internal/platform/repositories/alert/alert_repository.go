@@ -8,22 +8,22 @@ import (
 	"github.com/hatamiarash7/uptime-webhook/internal/models"
 )
 
-// AlertRepository is an interface for alert repository
-type AlertRepository struct {
+// Repository is an interface for alert repository
+type Repository struct {
 	client http.Client
 	config configs.Config
 }
 
 // NewAlertRepository creates a new alert repository
-func NewAlertRepository(c configs.Config) *AlertRepository {
-	return &AlertRepository{
+func NewAlertRepository(c configs.Config) *Repository {
+	return &Repository{
 		client: http.Client{},
 		config: c,
 	}
 }
 
 // CreateAlert creates an alert
-func (r *AlertRepository) CreateAlert(ctx context.Context, alert models.Alert) error {
+func (r *Repository) CreateAlert(ctx context.Context, alert models.Alert) error {
 	if r.config.Notifier.Squadcast.IsEnabled {
 		if err := r.CreateSquadcastIncident(alert); err != nil {
 			return err

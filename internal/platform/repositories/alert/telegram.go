@@ -10,7 +10,7 @@ import (
 )
 
 // CreateTelegramMessage sends a telegram message
-func (r *AlertRepository) CreateTelegramMessage(alert models.Alert) error {
+func (r *Repository) CreateTelegramMessage(alert models.Alert) error {
 	var urls []string
 	var wg sync.WaitGroup
 	results := make(chan string)

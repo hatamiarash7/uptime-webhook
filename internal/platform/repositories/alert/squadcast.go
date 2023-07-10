@@ -10,7 +10,7 @@ import (
 )
 
 // CreateSquadcastIncident creates an incident in squadcast
-func (r *AlertRepository) CreateSquadcastIncident(alert models.Alert) error {
+func (r *Repository) CreateSquadcastIncident(alert models.Alert) error {
 	var urls []string
 	var wg sync.WaitGroup
 	results := make(chan string)
