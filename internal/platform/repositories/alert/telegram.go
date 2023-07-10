@@ -3,6 +3,7 @@ package alert
 import (
 	"encoding/json"
 	"net/url"
+	netUrl "net/url"
 	"sync"
 
 	"github.com/hatamiarash7/uptime-webhook/internal/models"
@@ -43,7 +44,31 @@ func (r *Repository) CreateTelegramMessage(alert models.Alert) error {
 				log.WithError(err).Error("[TELEGRAM] Error sending request to " + url)
 				return
 			}
+
 			log.Debugf("[TELEGRAM] Result: %s", result)
+
+			r := make(map[string]interface{})
+			err = json.Unmarshal([]byte(result), &r)
+			if err != nil {
+				log.WithError(err).Error("[TELEGRAM] Error unmarshalling response")
+			}
+			if price, ok := r["ok"].(bool); ok {
+				if price == false {
+					// Extract the query parameters
+					parsedURL, err := netUrl.Parse(url)
+					if err != nil {
+						log.WithError(err).Error("[TELEGRAM] Error parsing URL")
+					}
+					queryParams := parsedURL.Query()
+
+					log.WithFields(log.Fields{
+						"error_code":  r["error_code"],
+						"description": r["description"],
+						"chat":        queryParams.Get("chat_id"),
+					}).Error("[TELEGRAM] Failed to send message")
+				}
+			}
+
 			results <- result
 		}(url)
 	}
