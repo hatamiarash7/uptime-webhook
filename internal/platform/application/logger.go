@@ -49,7 +49,7 @@ func SetupLogger(config *configs.Config) error {
 	sentryHook.Timeout = time.Second * 10
 	sentryHook.SetEnvironment(string(config.App.Env))
 	sentryHook.StacktraceConfiguration.Enable = true
-	sentryHook.SetRelease(Version)
+	sentryHook.SetRelease("uptime-webhook@" + Version)
 	log.AddHook(sentryHook)
 
 	return nil
