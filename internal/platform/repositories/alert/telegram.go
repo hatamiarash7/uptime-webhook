@@ -20,7 +20,7 @@ func (r *AlertRepository) CreateTelegramMessage(alert models.Alert) error {
 		params := url.Values{}
 		params.Add("chat_id", team.Chat)
 		params.Add("parse_mode", "markdownv2")
-		url := r.config.Notifier.Telegram.Host + team.Token + "/sendMessage?" + params.Encode()
+		url := r.config.Notifier.Telegram.Host + r.config.Notifier.Telegram.Token + "/sendMessage?" + params.Encode()
 		urls = append(urls, url)
 	}
 

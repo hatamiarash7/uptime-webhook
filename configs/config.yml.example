@@ -26,10 +26,9 @@ notifier:
   telegram:
     enable: true
     host: "https://api.telegram.org/bot"
+    token: "1234:ABCD"
     teams:
       team1:
-        - token: "1234:ABCD"
-          chat: "-123456789"
+        - chat: "-123456789"
       team2:
-        - token: "6453:ABCD"
-          chat: "-124564"
+        - chat: "-124564"

@@ -33,14 +33,15 @@ type Config struct {
 		Telegram struct {
 			IsEnabled bool                      `yaml:"enable"`
 			Host      string                    `yaml:"host"`
+			Token     string                    `yaml:"token"`
 			Teams     map[string][]TelegramTeam `yaml:"teams"`
 		} `yaml:"telegram"`
 	}
 }
 
+// TelegramTeam is a struct for Telegram team configuration
 type TelegramTeam struct {
-	Token string `yaml:"token"`
-	Chat  string `yaml:"chat"`
+	Chat string `yaml:"chat"`
 }
 
 // Load will loads the configuration from the given path
