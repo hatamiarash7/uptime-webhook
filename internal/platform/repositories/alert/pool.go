@@ -10,7 +10,7 @@ import (
 // CallSquadcast will send a Squadcast http request
 func (r *Repository) CallSquadcast(url string, body []byte) error {
 	return r.pool.Submit(func() {
-		result, err := sendPOSTRequest(url, body)
+		result, err := sendPOSTRequest(url, body, r.version)
 		if err != nil {
 			log.WithError(err).Error("[SQUADCAST] Error sending request to " + url)
 			return
@@ -22,7 +22,7 @@ func (r *Repository) CallSquadcast(url string, body []byte) error {
 // CallTelegram will send a Telegram bot http request
 func (r *Repository) CallTelegram(url string, body []byte) error {
 	return r.pool.Submit(func() {
-		result, err := sendPOSTRequest(url, body)
+		result, err := sendPOSTRequest(url, body, r.version)
 		if err != nil {
 			log.WithError(err).Error("[TELEGRAM] Error sending request to " + url)
 			return

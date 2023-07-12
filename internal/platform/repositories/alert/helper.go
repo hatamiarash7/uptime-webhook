@@ -12,7 +12,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func sendPOSTRequest(url string, payload []byte) (string, error) {
+func sendPOSTRequest(url string, payload []byte, version string) (string, error) {
 	// Create a new POST request
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(payload))
 	if err != nil {
@@ -23,6 +23,7 @@ func sendPOSTRequest(url string, payload []byte) (string, error) {
 	// Send the request
 	client := http.Client{}
 	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("User-Agent", "ArvanCloud-Uptime/"+version)
 	resp, err := client.Do(req)
 	if err != nil {
 		log.WithError(err).Error("[HTTP] Error sending request")

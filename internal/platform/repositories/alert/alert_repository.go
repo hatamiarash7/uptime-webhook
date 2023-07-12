@@ -11,17 +11,19 @@ import (
 
 // Repository is an interface for alert repository
 type Repository struct {
-	client http.Client
-	config configs.Config
-	pool   *ants.Pool
+	client  http.Client
+	config  configs.Config
+	pool    *ants.Pool
+	version string
 }
 
 // NewAlertRepository creates a new alert repository
-func NewAlertRepository(c configs.Config, pool *ants.Pool) *Repository {
+func NewAlertRepository(c configs.Config, pool *ants.Pool, version string) *Repository {
 	return &Repository{
-		client: http.Client{},
-		config: c,
-		pool:   pool,
+		client:  http.Client{},
+		config:  c,
+		pool:    pool,
+		version: version,
 	}
 }
 

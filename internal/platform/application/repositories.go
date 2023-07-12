@@ -11,5 +11,5 @@ func (a *App) registerRepositories() {
 }
 
 func (a *App) registerAlertRepository() {
-	a.Repositories.AlertRepository = alert.NewAlertRepository(a.configs, a.WorkerPools.AlertPool)
+	a.Repositories.AlertRepository = alert.NewAlertRepository(a.configs, a.WorkerPools.AlertPool, a.Version)
 }
