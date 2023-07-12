@@ -26,6 +26,8 @@ type App struct {
 	WorkerPools struct {
 		AlertPool *ants.Pool
 	}
+
+	Version string
 }
 
 // Shutdown is used to gracefully shutdown the application
@@ -82,7 +84,10 @@ func (a *App) registerRouter() {
 // NewApplication creates a new application instance
 func NewApplication(_ context.Context, config *configs.Config) (*App, error) {
 	log.Info("[SETUP] Create new application")
-	app := &App{configs: *config}
+	app := &App{
+		configs: *config,
+		Version: *&config.Version,
+	}
 
 	if err := app.registerAlertPool(); err != nil {
 		return nil, err
