@@ -1,7 +1,6 @@
 package application
 
 import (
-	"os"
 	"time"
 
 	"github.com/evalphobia/logrus_sentry"
@@ -35,21 +34,12 @@ func SetupLogger(config *configs.Config) error {
 		return err
 	}
 
-	Version, ok := os.LookupEnv("APP_VERSION")
-	if !ok {
-		if config.App.Env.IsLocal() {
-			Version = "local"
-		} else {
-			Version = "unknown"
-		}
-	}
-
-	log.Debugf("[SETUP] Running version: %s", Version)
+	log.Debugf("[SETUP] Running version: %s", config.Version)
 
 	sentryHook.Timeout = time.Second * 10
 	sentryHook.SetEnvironment(string(config.App.Env))
 	sentryHook.StacktraceConfiguration.Enable = true
-	sentryHook.SetRelease("uptime-webhook@" + Version)
+	sentryHook.SetRelease("uptime-webhook@" + config.Version)
 	log.AddHook(sentryHook)
 
 	return nil

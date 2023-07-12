@@ -38,6 +38,8 @@ type Config struct {
 			Teams     map[string][]TelegramTeam `yaml:"teams"`
 		} `yaml:"telegram"`
 	}
+
+	Version string
 }
 
 // TelegramTeam is a struct for Telegram team configuration
@@ -67,6 +69,17 @@ func Load(configPath string) (*Config, error) {
 	}()
 	decoder := yaml.NewDecoder(f)
 	err = decoder.Decode(&cfg)
+
+	v, ok := os.LookupEnv("APP_VERSION")
+	if !ok {
+		if cfg.App.Env.IsLocal() {
+			v = "local"
+		} else {
+			v = "unknown"
+		}
+	}
+
+	cfg.Version = v
 
 	return &cfg, err
 }
