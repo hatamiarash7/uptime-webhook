@@ -18,10 +18,10 @@ clean: ## Clean the bin directory
 	rm -f ./checkstyle-report.xml checkstyle-report.xml yamllint-checkstyle.xml
 
 build: pre ## Create the main binary
-	CGO_ENABLED=0 $(GOCMD) build -ldflags="-s -w" -o bin/webhook cmd/*.go
+	GO111MODULE=on CGO_ENABLED=0 $(GOCMD) build -ldflags="-s -w" -o bin/webhook cmd/*.go
 
 run: ## Run the application
-	go run cmd/*.go
+	GO111MODULE=on go run cmd/*.go
 
 ##################################### Beautify #####################################
 

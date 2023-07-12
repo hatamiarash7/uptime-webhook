@@ -12,7 +12,7 @@ ARG TARGETARCH
 WORKDIR /app/
 ADD . .
 
-RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -ldflags="-s -w" -o webhook cmd/*.go
+RUN GO111MODULE=on CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -ldflags="-s -w" -o webhook cmd/*.go
 
 FROM --platform=${TARGETPLATFORM:-linux/amd64} scratch
 
