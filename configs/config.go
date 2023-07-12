@@ -11,8 +11,9 @@ import (
 // Config is the struct that holds all the configuration of the application
 type Config struct {
 	App struct {
-		Env Environment `yaml:"env"`
-		Log struct {
+		Env      Environment `yaml:"env"`
+		PoolSize int         `yaml:"pool_size"`
+		Log      struct {
 			LogLevel        string   `yaml:"level"`
 			PrettyPrint     bool     `yaml:"pretty_print"`
 			SentryDSN       string   `yaml:"sentry_dsn"`

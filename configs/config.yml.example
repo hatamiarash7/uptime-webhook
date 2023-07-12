@@ -1,5 +1,6 @@
 app:
   env: "local"
+  pool_size: 1000
   log:
     level: debug
     pretty_print: true
