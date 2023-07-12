@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/hatamiarash7/uptime-webhook/configs"
 	"github.com/hatamiarash7/uptime-webhook/internal/platform/repositories/contracts"
+	"github.com/panjf2000/ants/v2"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -20,6 +21,10 @@ type App struct {
 
 	Repositories struct {
 		AlertRepository contracts.AlertRepository
+	}
+
+	WorkerPools struct {
+		AlertPool *ants.Pool
 	}
 }
 
@@ -78,6 +83,10 @@ func (a *App) registerRouter() {
 func NewApplication(_ context.Context, config *configs.Config) (*App, error) {
 	log.Info("[SETUP] Create new application")
 	app := &App{configs: *config}
+
+	if err := app.registerAlertPool(); err != nil {
+		return nil, err
+	}
 
 	app.registerRepositories()
 	app.registerRouter()
