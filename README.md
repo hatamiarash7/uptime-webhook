@@ -22,7 +22,7 @@ It's webhook handler for [uptime.com](https://uptime.com). You can define multip
    docker run -d \
        --name uptime-webhook \
        -p 8080:8080 \
-       -v /path/to/config.yml:/config/config.yml \
+       -v /path/to/config.yml:/app/configs/config.yml \
        hatamiarash7/uptime-webhook:latest
    ```
 
