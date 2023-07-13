@@ -40,7 +40,7 @@ It's webhook handler for [uptime.com](https://uptime.com). You can define multip
 You can use multiple notifiers at the same time. Just define them to the `config.yml` file.
 
 - [x] Squadcast
-- [ ] Telegram ( WIP )
+- [x] Telegram
 - [ ] Slack ( WIP )
 - [ ] Webhook ( WIP )
 
@@ -52,11 +52,21 @@ You can use multiple notifiers at the same time. Just define them to the `config
 
    ```yaml
    notifier:
-       squadcast:
-           enable: true
-           teams:
-               team1: "<WEBHOOK-URL>"
-               team2: "<WEBHOOK-URL>"
+      squadcast:
+         enable: true
+         teams:
+            team1: "<WEBHOOK-URL>"
+            team2: "<WEBHOOK-URL>"
+      telegram:
+         enable: true
+         host: "https://api.telegram.org/bot"
+         token: "1234:ABCD"
+         teams:
+            team1:
+               - chat: "-123456789"
+            team2:
+               - chat: "-124564"
+                 topic: "56789"
    ```
 
 ---
