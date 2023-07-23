@@ -4,15 +4,24 @@ import (
 	"encoding/json"
 	netUrl "net/url"
 
+	net_url "net/url"
+
 	log "github.com/sirupsen/logrus"
 )
 
 // CallSquadcast will send a Squadcast http request
 func (r *Repository) CallSquadcast(url string, body []byte) error {
+	u, err := net_url.ParseRequestURI(url)
+
+	if err != nil {
+		log.WithError(err).Errorf("[SQUADCAST] Error parsing URL: %s", url)
+		return err
+	}
+
 	return r.pool.Submit(func() {
-		result, err := sendPOSTRequest(url, body, r.version)
+		result, err := sendPOSTRequest(u.String(), body, r.version)
 		if err != nil {
-			log.WithError(err).Error("[SQUADCAST] Error sending request to " + url)
+			log.WithError(err).Error("[SQUADCAST] Error sending request to " + u.String())
 			return
 		}
 		log.Debugf("[SQUADCAST] Result: %s", result)
@@ -21,10 +30,17 @@ func (r *Repository) CallSquadcast(url string, body []byte) error {
 
 // CallTelegram will send a Telegram bot http request
 func (r *Repository) CallTelegram(url string, body []byte) error {
+	u, err := net_url.ParseRequestURI(url)
+
+	if err != nil {
+		log.WithError(err).Errorf("[SQUADCAST] Error parsing URL: %s", url)
+		return err
+	}
+
 	return r.pool.Submit(func() {
-		result, err := sendPOSTRequest(url, body, r.version)
+		result, err := sendPOSTRequest(u.String(), body, r.version)
 		if err != nil {
-			log.WithError(err).Error("[TELEGRAM] Error sending request to " + url)
+			log.WithError(err).Error("[TELEGRAM] Error sending request to " + u.String())
 			return
 		}
 
@@ -38,7 +54,7 @@ func (r *Repository) CallTelegram(url string, body []byte) error {
 		if price, ok := r["ok"].(bool); ok {
 			if price == false {
 				// Extract the query parameters
-				parsedURL, err := netUrl.Parse(url)
+				parsedURL, err := netUrl.Parse(u.String())
 				if err != nil {
 					log.WithError(err).Error("[TELEGRAM] Error parsing URL")
 				}
