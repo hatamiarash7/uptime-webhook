@@ -3,6 +3,7 @@ package alert
 import (
 	"encoding/json"
 	"net/url"
+	"strings"
 
 	"github.com/hatamiarash7/uptime-webhook/internal/models"
 	log "github.com/sirupsen/logrus"
@@ -13,7 +14,7 @@ func (r *Repository) CreateTelegramMessage(alert models.Alert) error {
 	var urls []string
 
 	for _, tag := range alert.Data.Service.Tags {
-		team, ok := r.config.Notifier.Telegram.Teams[tag]
+		team, ok := r.config.Notifier.Telegram.Teams[strings.ToLower(tag)]
 		if !ok {
 			log.Errorf("[Telegram] Team not found for tag: %s", tag)
 			continue
