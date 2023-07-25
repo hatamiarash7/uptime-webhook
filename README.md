@@ -77,6 +77,18 @@ notifier:
               topic: "56789"
 ```
 
+## Monitoring
+
+We have some metrics for monitoring our service in `/metrics` path.
+
+| Metric name                        | Description                                 |
+| ---------------------------------- | ------------------------------------------- |
+| `UPTIME_webhook_total_alerts`      | Total number of alerts                      |
+| `UPTIME_webhook_telegram_success`  | Total number of successful Telegram notify  |
+| `UPTIME_webhook_telegram_failure`  | Total number of failure Telegram notify     |
+| `UPTIME_webhook_squadcast_success` | Total number of successful Squadcast notify |
+| `UPTIME_webhook_squadcast_failure` | Total number of failure Squadcast notify    |
+
 ---
 
 ## Support 💛
