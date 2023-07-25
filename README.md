@@ -57,17 +57,25 @@ You can use multiple notifiers at the same time. Just define them to the `config
          teams:
             team1: "<WEBHOOK-URL>"
             team2: "<WEBHOOK-URL>"
-      telegram:
-         enable: true
-         host: "https://api.telegram.org/bot"
-         token: "1234:ABCD"
-         teams:
-            team1:
-               - chat: "-123456789"
-            team2:
-               - chat: "-124564"
-                 topic: "56789"
    ```
+
+### Telegram
+
+Fill your `notifier` with a `telegram` section like this:
+
+```yaml
+notifier:
+   telegram:
+      enable: true
+      host: "https://api.telegram.org/bot"
+      token: "1234:ABCD"
+      teams:
+         team1:
+            - chat: "-123456789"
+         team2:
+            - chat: "-124564"
+               topic: "56789"
+```
 
 ---
 
