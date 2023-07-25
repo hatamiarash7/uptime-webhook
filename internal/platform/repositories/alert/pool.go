@@ -6,6 +6,7 @@ import (
 
 	net_url "net/url"
 
+	"github.com/hatamiarash7/uptime-webhook/internal/platform/monitoring"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -15,16 +16,21 @@ func (r *Repository) CallSquadcast(url string, body []byte) error {
 
 	if err != nil {
 		log.WithError(err).Errorf("[SQUADCAST] Error parsing URL: %s", url)
+		r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncSquadcastSendFailure)})
 		return err
 	}
 
 	return r.pool.Submit(func() {
 		result, err := sendPOSTRequest(u.String(), body, r.version)
+
 		if err != nil {
 			log.WithError(err).Error("[SQUADCAST] Error sending request to " + u.String())
+			r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncSquadcastSendFailure)})
 			return
 		}
+
 		log.Debugf("[SQUADCAST] Result: %s", result)
+		r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncSquadcastSendSuccess)})
 	})
 }
 
@@ -34,6 +40,7 @@ func (r *Repository) CallTelegram(url string, body []byte) error {
 
 	if err != nil {
 		log.WithError(err).Errorf("[SQUADCAST] Error parsing URL: %s", url)
+		r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncTelegramSendFailure)})
 		return err
 	}
 
@@ -41,17 +48,19 @@ func (r *Repository) CallTelegram(url string, body []byte) error {
 		result, err := sendPOSTRequest(u.String(), body, r.version)
 		if err != nil {
 			log.WithError(err).Error("[TELEGRAM] Error sending request to " + u.String())
+			r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncTelegramSendFailure)})
 			return
 		}
 
 		log.Debugf("[TELEGRAM] Result: %s", result)
+		r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncTelegramSendFailure)})
 
-		r := make(map[string]interface{})
-		err = json.Unmarshal([]byte(result), &r)
+		res := make(map[string]interface{})
+		err = json.Unmarshal([]byte(result), &res)
 		if err != nil {
 			log.WithError(err).Error("[TELEGRAM] Error unmarshalling response")
 		}
-		if price, ok := r["ok"].(bool); ok {
+		if price, ok := res["ok"].(bool); ok {
 			if price == false {
 				// Extract the query parameters
 				parsedURL, err := netUrl.Parse(u.String())
@@ -61,11 +70,14 @@ func (r *Repository) CallTelegram(url string, body []byte) error {
 				queryParams := parsedURL.Query()
 
 				log.WithFields(log.Fields{
-					"error_code":  r["error_code"],
-					"description": r["description"],
+					"error_code":  res["error_code"],
+					"description": res["description"],
 					"chat":        queryParams.Get("chat_id"),
 				}).Error("[TELEGRAM] Failed to send message")
+				r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncTelegramSendFailure)})
 			}
+		} else {
+			r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncTelegramSendSuccess)})
 		}
 	})
 }

@@ -6,29 +6,34 @@ import (
 
 	"github.com/hatamiarash7/uptime-webhook/configs"
 	"github.com/hatamiarash7/uptime-webhook/internal/models"
+	"github.com/hatamiarash7/uptime-webhook/internal/platform/monitoring"
 	"github.com/panjf2000/ants/v2"
 )
 
 // Repository is an interface for alert repository
 type Repository struct {
-	client  http.Client
-	config  configs.Config
-	pool    *ants.Pool
-	version string
+	client     http.Client
+	config     configs.Config
+	pool       *ants.Pool
+	version    string
+	monitoring monitoring.Monitor
 }
 
 // NewAlertRepository creates a new alert repository
-func NewAlertRepository(c configs.Config, pool *ants.Pool, version string) *Repository {
+func NewAlertRepository(c configs.Config, pool *ants.Pool, version string, monitoring monitoring.Monitor) *Repository {
 	return &Repository{
-		client:  http.Client{},
-		config:  c,
-		pool:    pool,
-		version: version,
+		client:     http.Client{},
+		config:     c,
+		pool:       pool,
+		version:    version,
+		monitoring: monitoring,
 	}
 }
 
 // CreateAlert creates an alert
 func (r *Repository) CreateAlert(ctx context.Context, alert models.Alert) error {
+	r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncTotalAlert)})
+
 	if r.config.Notifier.Squadcast.IsEnabled {
 		if err := r.CreateSquadcastIncident(alert); err != nil {
 			return err

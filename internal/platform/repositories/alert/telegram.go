@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/hatamiarash7/uptime-webhook/internal/models"
+	"github.com/hatamiarash7/uptime-webhook/internal/platform/monitoring"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -17,6 +18,7 @@ func (r *Repository) CreateTelegramMessage(alert models.Alert) error {
 		team, ok := r.config.Notifier.Telegram.Teams[strings.ToLower(tag)]
 		if !ok {
 			log.Errorf("[Telegram] Team not found for tag: %s", tag)
+			r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncTelegramSendFailure)})
 			continue
 		}
 

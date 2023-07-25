@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/hatamiarash7/uptime-webhook/configs"
+	"github.com/hatamiarash7/uptime-webhook/internal/platform/monitoring"
 	"github.com/hatamiarash7/uptime-webhook/internal/platform/repositories/contracts"
 	"github.com/panjf2000/ants/v2"
 
@@ -28,6 +29,8 @@ type App struct {
 	}
 
 	Version string
+
+	Monitoring monitoring.Monitor
 }
 
 // Shutdown is used to gracefully shutdown the application
@@ -78,7 +81,20 @@ func (a *App) registerRouter() {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	a.Router = gin.Default()
+	a.Router = gin.New()
+	a.Router.Use(
+		gin.LoggerWithWriter(gin.DefaultWriter, "/metrics"),
+		gin.Recovery(),
+	)
+}
+
+func (a *App) registerMonitoring() {
+	if !a.configs.App.Env.IsTesting() {
+		a.Monitoring = monitoring.NewPrometheusMonitor()
+		return
+	}
+
+	a.Monitoring = monitoring.NewMockMonitor()
 }
 
 // NewApplication creates a new application instance
@@ -93,6 +109,7 @@ func NewApplication(_ context.Context, config *configs.Config) (*App, error) {
 		return nil, err
 	}
 
+	app.registerMonitoring()
 	app.registerRepositories()
 	app.registerRouter()
 	app.registerRoutes()
