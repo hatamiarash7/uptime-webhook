@@ -74,7 +74,7 @@ notifier:
             - chat: "-123456789"
          team2:
             - chat: "-124564"
-               topic: "56789"
+              topic: "56789"
 ```
 
 ---
