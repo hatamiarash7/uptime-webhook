@@ -92,6 +92,8 @@ notifier:
             team2: "<WEBHOOK-URL>"
    ```
 
+   ![slack](.github/slack.png)
+
 ## Monitoring
 
 We have some metrics for monitoring our service in `/metrics` path.
