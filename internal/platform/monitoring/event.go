@@ -14,6 +14,10 @@ const (
 	IncSquadcastSendSuccess
 	// IncSquadcastSendFailure will show the total failure squadcast sends
 	IncSquadcastSendFailure
+	// SetActiveJobsInAlertPool will show the total active jobs in alert pool
+	SetActiveJobsInAlertPool
+	// SetAlertPoolCapacity will show the total capacity of alert pool
+	SetAlertPoolCapacity
 )
 
 // Event is the event structure

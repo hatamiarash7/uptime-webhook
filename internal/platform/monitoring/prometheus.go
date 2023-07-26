@@ -13,11 +13,13 @@ const (
 )
 
 var (
-	totalAlerts      prometheus.Counter
-	telegramSuccess  prometheus.Counter
-	telegramFailure  prometheus.Counter
-	squadcastSuccess prometheus.Counter
-	squadcastFailure prometheus.Counter
+	totalAlerts          prometheus.Counter
+	telegramSuccess      prometheus.Counter
+	telegramFailure      prometheus.Counter
+	squadcastSuccess     prometheus.Counter
+	squadcastFailure     prometheus.Counter
+	alertPoolCapacity    prometheus.Gauge
+	alertPoolRunningJobs prometheus.Gauge
 )
 
 // PrometheusMonitor is the prometheus monitor
@@ -64,6 +66,20 @@ func NewPrometheusMonitor() Monitor {
 		Help:      "Total number of failure notify requests to Squadcast.",
 	})
 
+	alertPoolCapacity = promauto.NewGauge(prometheus.GaugeOpts{
+		Namespace: namespace,
+		Subsystem: subsystem,
+		Name:      "alert_pool_capacity",
+		Help:      "Total capacity of the alert pool",
+	})
+
+	alertPoolRunningJobs = promauto.NewGauge(prometheus.GaugeOpts{
+		Namespace: namespace,
+		Subsystem: subsystem,
+		Name:      "alert_pool_running_jobs",
+		Help:      "Number of running jobs in the alert pool",
+	})
+
 	return PrometheusMonitor{}
 }
 
@@ -81,6 +97,10 @@ func (i PrometheusMonitor) Record(events []Event) {
 			squadcastSuccess.Inc()
 		case IncSquadcastSendFailure:
 			squadcastFailure.Inc()
+		case SetActiveJobsInAlertPool:
+			alertPoolRunningJobs.Set(float64(event.GetParam(0).(int)))
+		case SetAlertPoolCapacity:
+			alertPoolCapacity.Set(float64(event.GetParam(0).(int)))
 		default:
 			log.Errorf("[MONITORING] Invalid event id [%d]", event.GetID())
 		}
