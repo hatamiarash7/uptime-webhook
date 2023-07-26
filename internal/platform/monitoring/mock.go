@@ -27,6 +27,10 @@ func (i MockMonitor) Record(events []Event) {
 			log.Info("====IncSquadcastSendSuccess=====")
 		case IncSquadcastSendFailure:
 			log.Info("====IncSquadcastSendFailure=====")
+		case IncSlackSendSuccess:
+			log.Info("====IncSlackSendSuccess=====")
+		case IncSlackSendFailure:
+			log.Info("====IncSlackSendFailure=====")
 		case SetActiveJobsInAlertPool:
 			log.Info("====SetActiveJobsInAlertPool=====")
 		case SetAlertPoolCapacity:

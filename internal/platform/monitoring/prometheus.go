@@ -18,6 +18,8 @@ var (
 	telegramFailure      prometheus.Counter
 	squadcastSuccess     prometheus.Counter
 	squadcastFailure     prometheus.Counter
+	slackSuccess         prometheus.Counter
+	slackFailure         prometheus.Counter
 	alertPoolCapacity    prometheus.Gauge
 	alertPoolRunningJobs prometheus.Gauge
 )
@@ -66,6 +68,20 @@ func NewPrometheusMonitor() Monitor {
 		Help:      "Total number of failure notify requests to Squadcast.",
 	})
 
+	slackSuccess = promauto.NewCounter(prometheus.CounterOpts{
+		Namespace: namespace,
+		Subsystem: subsystem,
+		Name:      "slack_success",
+		Help:      "Total number of successful notify requests to Slack.",
+	})
+
+	slackFailure = promauto.NewCounter(prometheus.CounterOpts{
+		Namespace: namespace,
+		Subsystem: subsystem,
+		Name:      "slack_failure",
+		Help:      "Total number of failure notify requests to Slack.",
+	})
+
 	alertPoolCapacity = promauto.NewGauge(prometheus.GaugeOpts{
 		Namespace: namespace,
 		Subsystem: subsystem,
@@ -97,6 +113,10 @@ func (i PrometheusMonitor) Record(events []Event) {
 			squadcastSuccess.Inc()
 		case IncSquadcastSendFailure:
 			squadcastFailure.Inc()
+		case IncSlackSendSuccess:
+			slackSuccess.Inc()
+		case IncSlackSendFailure:
+			slackFailure.Inc()
 		case SetActiveJobsInAlertPool:
 			alertPoolRunningJobs.Set(float64(event.GetParam(0).(int)))
 		case SetAlertPoolCapacity:

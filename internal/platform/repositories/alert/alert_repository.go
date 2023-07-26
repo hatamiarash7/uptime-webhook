@@ -46,5 +46,11 @@ func (r *Repository) CreateAlert(ctx context.Context, alert models.Alert) error 
 		}
 	}
 
+	if r.config.Notifier.Slack.IsEnabled {
+		if err := r.CreateSlackMessage(alert); err != nil {
+			return err
+		}
+	}
+
 	return nil
 }

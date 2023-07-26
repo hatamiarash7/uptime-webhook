@@ -34,3 +34,8 @@ notifier:
       team2:
         - chat: "-124564"
           topic: "56789"
+  slack:
+    enable: true
+    teams:
+      team1: ""
+      team2: ""

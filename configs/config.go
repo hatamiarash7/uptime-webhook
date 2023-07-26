@@ -37,6 +37,10 @@ type Config struct {
 			Token     string                    `yaml:"token"`
 			Teams     map[string][]TelegramTeam `yaml:"teams"`
 		} `yaml:"telegram"`
+		Slack struct {
+			IsEnabled bool `yaml:"enable"`
+			Teams     map[string]string
+		} `yaml:"slack"`
 	}
 
 	Version string

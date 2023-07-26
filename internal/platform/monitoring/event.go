@@ -14,6 +14,10 @@ const (
 	IncSquadcastSendSuccess
 	// IncSquadcastSendFailure will show the total failure squadcast sends
 	IncSquadcastSendFailure
+	// IncSlackSendSuccess will show the total success squadcast sends
+	IncSlackSendSuccess
+	// IncSlackSendFailure will show the total failure squadcast sends
+	IncSlackSendFailure
 	// SetActiveJobsInAlertPool will show the total active jobs in alert pool
 	SetActiveJobsInAlertPool
 	// SetAlertPoolCapacity will show the total capacity of alert pool

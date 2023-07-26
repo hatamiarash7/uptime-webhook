@@ -81,3 +81,27 @@ func (r *Repository) CallTelegram(url string, body []byte) error {
 		}
 	})
 }
+
+// CallSlack will send a Slack http request
+func (r *Repository) CallSlack(url string, body []byte) error {
+	u, err := net_url.ParseRequestURI(url)
+
+	if err != nil {
+		log.WithError(err).Errorf("[SLACK] Error parsing URL: %s", url)
+		r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncSlackSendFailure)})
+		return err
+	}
+
+	return r.pool.Submit(func() {
+		result, err := sendPOSTRequest(u.String(), body, r.version)
+
+		if err != nil {
+			log.WithError(err).Error("[SLACK] Error sending request to " + u.String())
+			r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncSlackSendFailure)})
+			return
+		}
+
+		log.Debugf("[SLACK] Result: %s", result)
+		r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncSlackSendSuccess)})
+	})
+}

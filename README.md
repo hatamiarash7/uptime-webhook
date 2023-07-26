@@ -41,7 +41,7 @@ You can use multiple notifiers at the same time. Just define them to the `config
 
 - [x] Squadcast
 - [x] Telegram
-- [ ] Slack ( WIP )
+- [x] Slack
 - [ ] Webhook ( WIP )
 
 ### Squadcast
@@ -77,6 +77,21 @@ notifier:
               topic: "56789"
 ```
 
+### Slack
+
+1. Create a new Application in Slack
+2. Use `Incoming Webhook` as type
+3. Define the webhook in `config.yml` file
+
+   ```yaml
+   notifier:
+      slack:
+         enable: true
+         teams:
+            team1: "<WEBHOOK-URL>"
+            team2: "<WEBHOOK-URL>"
+   ```
+
 ## Monitoring
 
 We have some metrics for monitoring our service in `/metrics` path.
@@ -88,6 +103,8 @@ We have some metrics for monitoring our service in `/metrics` path.
 | `UPTIME_webhook_telegram_failure`  | Total number of failure Telegram notify     |
 | `UPTIME_webhook_squadcast_success` | Total number of successful Squadcast notify |
 | `UPTIME_webhook_squadcast_failure` | Total number of failure Squadcast notify    |
+| `UPTIME_webhook_slack_success`     | Total number of successful Slack notify     |
+| `UPTIME_webhook_slack_failure`     | Total number of failure Slack notify        |
 
 ---
 
