@@ -77,6 +77,8 @@ notifier:
               topic: "56789"
 ```
 
+![telegram](.github/telegram.png)
+
 ### Slack
 
 1. Create a new Application in Slack
