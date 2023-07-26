@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-co-op/gocron"
 	"github.com/hatamiarash7/uptime-webhook/configs"
 	"github.com/hatamiarash7/uptime-webhook/internal/platform/monitoring"
 	"github.com/hatamiarash7/uptime-webhook/internal/platform/repositories/contracts"
@@ -17,8 +18,9 @@ import (
 
 // App is the main application
 type App struct {
-	configs configs.Config
-	Router  *gin.Engine
+	configs   configs.Config
+	scheduler *gocron.Scheduler
+	Router    *gin.Engine
 
 	Repositories struct {
 		AlertRepository contracts.AlertRepository
@@ -69,6 +71,10 @@ func (a *App) RunHTTPServer(ctx context.Context, wg *sync.WaitGroup) {
 	}()
 }
 
+func (a *App) registerScheduler() {
+	a.scheduler = gocron.NewScheduler(time.UTC)
+}
+
 func (a *App) registerRouter() {
 	log.Info("[SETUP] Register router")
 
@@ -105,14 +111,18 @@ func NewApplication(_ context.Context, config *configs.Config) (*App, error) {
 		Version: *&config.Version,
 	}
 
+	app.registerScheduler()
+	app.registerMonitoring()
+
 	if err := app.registerAlertPool(); err != nil {
 		return nil, err
 	}
 
-	app.registerMonitoring()
 	app.registerRepositories()
 	app.registerRouter()
 	app.registerRoutes()
+
+	app.scheduler.StartAsync()
 
 	return app, nil
 }
