@@ -67,6 +67,7 @@ func formatSquadcastMessage(alert models.Alert) models.SquadcastIncident {
 			Description: "Your `" + alert.Data.Service.DisplayName +
 				"` service is " + status +
 				" at *" + alert.Data.Alert.CreatedAt.Format("2006-01-02 15:04:05") + "*\n\n" +
+				"**Address:** " + alert.Data.Device.Address + "\n\n" +
 				"**Result:** " + alert.Data.Alert.ShortOutput + "\n",
 			Tags:      tags,
 			Status:    "trigger",
@@ -113,13 +114,14 @@ func formatTelegramMessage(alert models.Alert) models.TelegramMessage {
 		text += "🏷 *Title:* The \"" + alert.Data.Service.ShortName + "\" is down\n\n"
 		text += "📄 *Description:* Your `" + alert.Data.Service.DisplayName +
 			"` service is down" +
-			" at *" + alert.Data.Alert.CreatedAt.Format("2006-01-02 15:04:05") + "*\n\n" +
-			"🔍 *Result:* " + alert.Data.Alert.ShortOutput + "\n"
-
+			" at *" + alert.Data.Alert.CreatedAt.Format("2006-01-02 15:04:05") + "*\n\n"
+		text += "💻 *Address:* " + alert.Data.Device.Address + "\n\n"
+		text += "🔍 *Result:* " + alert.Data.Alert.ShortOutput + "\n"
 	} else {
 		text = "✅ *Resolved*\n\n"
 		text += "📌 *Source:* Uptime\n\n"
 		text += "🏷 *Title:* The \"" + alert.Data.Service.ShortName + "\" is up\n\n"
+		text += "💻 *Address:* " + alert.Data.Device.Address + "\n\n"
 		text += "⏱️ *Time:* " + alert.Data.Date.Format("2006-01-02 15:04:05") + "\n\n"
 	}
 
