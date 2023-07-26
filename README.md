@@ -59,6 +59,8 @@ You can use multiple notifiers at the same time. Just define them to the `config
             team2: "<WEBHOOK-URL>"
    ```
 
+   ![squadcast](.github/squadcast.png)
+
 ### Telegram
 
 Fill your `notifier` with a `telegram` section like this:
