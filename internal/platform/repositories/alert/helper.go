@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/hatamiarash7/uptime-webhook/internal/models"
 	log "github.com/sirupsen/logrus"
@@ -21,7 +22,9 @@ func sendPOSTRequest(url string, payload []byte, version string) (string, error)
 	}
 
 	// Send the request
-	client := http.Client{}
+	client := http.Client{
+		Timeout: 5 * time.Second,
+	}
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("User-Agent", "ArvanCloud-Uptime/"+version)
 	resp, err := client.Do(req)
