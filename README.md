@@ -4,6 +4,18 @@
 [![License][badge_license]][link_license]
 [![Image size][badge_size_latest]][link_docker_hub]
 
+- [Uptime webhook handler](#uptime-webhook-handler)
+  - [Installation](#installation)
+  - [Notifiers](#notifiers)
+    - [Squadcast](#squadcast)
+    - [Telegram](#telegram)
+    - [Slack](#slack)
+    - [Custom Webhook](#custom-webhook)
+  - [Monitoring](#monitoring)
+  - [Support 💛](#support-)
+  - [Contributing 🤝](#contributing-)
+  - [Issues](#issues)
+
 It's webhook handler for [uptime.com](https://uptime.com). You can define multiple teams and multiple notifiers for each team.
 
 1. Uptime.com will monitor our targets ( HTTP/S - ICMP - DNS - API - ... )
@@ -37,12 +49,7 @@ It's webhook handler for [uptime.com](https://uptime.com). You can define multip
 
 ## Notifiers
 
-You can use multiple notifiers at the same time. Just define them to the `config.yml` file.
-
-- [x] Squadcast
-- [x] Telegram
-- [x] Slack
-- [ ] Webhook ( WIP )
+You can use multiple notifiers at the same time. Just define them to the `config.yml` file. There is a [config.yml.example](./configs/config.yml.example) file in the `configs` directory. You can use it as a template.
 
 ### Squadcast
 
@@ -98,29 +105,44 @@ notifier:
 
    ![slack](.github/slack.png)
 
+### Custom Webhook
+
+Fill your `notifier` with a `custom` section and put your webhook URL like this:
+
+```yaml
+notifier:
+   custom:
+      enable: true
+      teams:
+         team1: "<WEBHOOK-URL>"
+         team2: "<WEBHOOK-URL>"
+```
+
 ## Monitoring
 
 We have some metrics for monitoring our service in `/metrics` path.
 
-| Metric name                              | Description                                 |
-| ---------------------------------------- | ------------------------------------------- |
-| `UPTIME_webhook_total_alerts`            | Total number of alerts                      |
-| `UPTIME_webhook_telegram_success`        | Total number of successful Telegram notify  |
-| `UPTIME_webhook_telegram_failure`        | Total number of failure Telegram notify     |
-| `UPTIME_webhook_squadcast_success`       | Total number of successful Squadcast notify |
-| `UPTIME_webhook_squadcast_failure`       | Total number of failure Squadcast notify    |
-| `UPTIME_webhook_slack_success`           | Total number of successful Slack notify     |
-| `UPTIME_webhook_slack_failure`           | Total number of failure Slack notify        |
-| `UPTIME_webhook_alert_pool_capacity`     | The alert pool capacity                     |
-| `UPTIME_webhook_alert_pool_running_jobs` | Total number of active jobs in alert pool   |
+| Metric name                              | Description                                      |
+| ---------------------------------------- | ------------------------------------------------ |
+| `UPTIME_webhook_total_alerts`            | Total number of alerts                           |
+| `UPTIME_webhook_telegram_success`        | Total number of successful Telegram notify       |
+| `UPTIME_webhook_telegram_failure`        | Total number of failure Telegram notify          |
+| `UPTIME_webhook_squadcast_success`       | Total number of successful Squadcast notify      |
+| `UPTIME_webhook_squadcast_failure`       | Total number of failure Squadcast notify         |
+| `UPTIME_webhook_slack_success`           | Total number of successful Slack notify          |
+| `UPTIME_webhook_slack_failure`           | Total number of failure Slack notify             |
+| `UPTIME_webhook_custom_success`          | Total number of successful Custom Webhook notify |
+| `UPTIME_webhook_custom_failure`          | Total number of failure Custom Webhook notify    |
+| `UPTIME_webhook_alert_pool_capacity`     | The alert pool capacity                          |
+| `UPTIME_webhook_alert_pool_running_jobs` | Total number of active jobs in alert pool        |
 
 ---
 
 ## Support 💛
 
-[![Donate with Bitcoin](https://en.cryptobadges.io/badge/micro/bc1qmmh6vt366yzjt3grjxjjqynrrxs3frun8gnxrz)](https://en.cryptobadges.io/donate/bc1qmmh6vt366yzjt3grjxjjqynrrxs3frun8gnxrz) [![Donate with Ethereum](https://en.cryptobadges.io/badge/micro/0x0831bD72Ea8904B38Be9D6185Da2f930d6078094)](https://en.cryptobadges.io/donate/0x0831bD72Ea8904B38Be9D6185Da2f930d6078094)
+[![Donate with Bitcoin](https://img.shields.io/badge/Bitcoin-bc1qmmh6vt366yzjt3grjxjjqynrrxs3frun8gnxrz-orange)](https://donatebadges.ir/donate/Bitcoin/bc1qmmh6vt366yzjt3grjxjjqynrrxs3frun8gnxrz)
 
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D1WGU9)
+[![Donate with Ethereum](https://img.shields.io/badge/Ethereum-0x0831bD72Ea8904B38Be9D6185Da2f930d6078094-blueviolet)](https://donatebadges.ir/donate/Ethereum/0x0831bD72Ea8904B38Be9D6185Da2f930d6078094)
 
 <div><a href="https://payping.ir/@hatamiarash7"><img src="https://cdn.payping.ir/statics/Payping-logo/Trust/blue.svg" height="128" width="128"></a></div>
 
