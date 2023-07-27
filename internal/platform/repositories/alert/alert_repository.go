@@ -52,5 +52,11 @@ func (r *Repository) CreateAlert(ctx context.Context, alert models.Alert) error 
 		}
 	}
 
+	if r.config.Notifier.Custom.IsEnabled {
+		if err := r.CreateCustomMessage(alert); err != nil {
+			return err
+		}
+	}
+
 	return nil
 }

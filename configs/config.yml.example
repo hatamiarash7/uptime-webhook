@@ -39,3 +39,8 @@ notifier:
     teams:
       team1: ""
       team2: ""
+  custom:
+    enable: true
+    teams:
+      team1: ""
+      team2: ""

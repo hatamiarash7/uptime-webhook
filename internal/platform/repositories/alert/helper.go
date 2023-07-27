@@ -116,6 +116,30 @@ func formatSlackMessage(alert models.Alert) models.SlackMessage {
 	return payload
 }
 
+func formatCustomMessage(alert models.Alert) models.CustomMessage {
+	var (
+		status string
+		date   string
+	)
+
+	if alert.Event == "alert_raised" {
+		status = "raised"
+		date = alert.Data.Alert.CreatedAt.Format("2006-01-02 15:04:05")
+	} else {
+		status = "resolved"
+		date = alert.Data.Date.Format("2006-01-02 15:04:05")
+	}
+
+	return models.CustomMessage{
+		Status:      status,
+		ShortName:   alert.Data.Service.ShortName,
+		DisplayName: alert.Data.Service.DisplayName,
+		Date:        date,
+		Address:     alert.Data.Device.Address,
+		ShortOutput: alert.Data.Alert.ShortOutput,
+	}
+}
+
 func getAlertColor(state string) models.SquadcastTag {
 	var color string
 

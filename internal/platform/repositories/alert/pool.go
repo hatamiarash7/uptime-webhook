@@ -105,3 +105,27 @@ func (r *Repository) CallSlack(url string, body []byte) error {
 		r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncSlackSendSuccess)})
 	})
 }
+
+// CallCustom will send a Custom http request
+func (r *Repository) CallCustom(url string, body []byte) error {
+	u, err := net_url.ParseRequestURI(url)
+
+	if err != nil {
+		log.WithError(err).Errorf("[CUSTOM] Error parsing URL: %s", url)
+		r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncCustomSendFailure)})
+		return err
+	}
+
+	return r.pool.Submit(func() {
+		result, err := sendPOSTRequest(u.String(), body, r.version)
+
+		if err != nil {
+			log.WithError(err).Error("[CUSTOM] Error sending request to " + u.String())
+			r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncCustomSendFailure)})
+			return
+		}
+
+		log.Debugf("[CUSTOM] Result: %s", result)
+		r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncCustomSendSuccess)})
+	})
+}
