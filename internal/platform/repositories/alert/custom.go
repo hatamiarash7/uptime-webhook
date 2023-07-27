@@ -16,7 +16,7 @@ func (r *Repository) CreateCustomMessage(alert models.Alert) error {
 	for _, tag := range alert.Data.Service.Tags {
 		url, ok := r.config.Notifier.Custom.Teams[strings.ToLower(tag)]
 		if !ok {
-			log.Errorf("[CUSTOM] Team not found for tag: %s", tag)
+			log.Warnf("[CUSTOM] Team not found for tag: %s", tag)
 			r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncCustomSendFailure)})
 			continue
 		}

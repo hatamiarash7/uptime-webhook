@@ -16,7 +16,7 @@ func (r *Repository) CreateSquadcastIncident(alert models.Alert) error {
 	for _, tag := range alert.Data.Service.Tags {
 		url, ok := r.config.Notifier.Squadcast.Teams[strings.ToLower(tag)]
 		if !ok {
-			log.Errorf("[SQUADCAST] Team not found for tag: %s", tag)
+			log.Warnf("[SQUADCAST] Team not found for tag: %s", tag)
 			r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncSquadcastSendFailure)})
 			continue
 		}

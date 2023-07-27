@@ -16,7 +16,7 @@ func (r *Repository) CreateSlackMessage(alert models.Alert) error {
 	for _, tag := range alert.Data.Service.Tags {
 		url, ok := r.config.Notifier.Slack.Teams[strings.ToLower(tag)]
 		if !ok {
-			log.Errorf("[SLACK] Team not found for tag: %s", tag)
+			log.Warnf("[SLACK] Team not found for tag: %s", tag)
 			r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncSlackSendFailure)})
 			continue
 		}

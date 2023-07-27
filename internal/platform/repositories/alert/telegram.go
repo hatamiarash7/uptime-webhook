@@ -17,7 +17,7 @@ func (r *Repository) CreateTelegramMessage(alert models.Alert) error {
 	for _, tag := range alert.Data.Service.Tags {
 		team, ok := r.config.Notifier.Telegram.Teams[strings.ToLower(tag)]
 		if !ok {
-			log.Errorf("[Telegram] Team not found for tag: %s", tag)
+			log.Warnf("[Telegram] Team not found for tag: %s", tag)
 			r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncTelegramSendFailure)})
 			continue
 		}
