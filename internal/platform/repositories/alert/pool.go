@@ -53,7 +53,6 @@ func (r *Repository) CallTelegram(url string, body []byte) error {
 		}
 
 		log.Debugf("[TELEGRAM] Result: %s", result)
-		r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncTelegramSendFailure)})
 
 		res := make(map[string]interface{})
 		err = json.Unmarshal([]byte(result), &res)
@@ -76,6 +75,7 @@ func (r *Repository) CallTelegram(url string, body []byte) error {
 				}).Error("[TELEGRAM] Failed to send message")
 				r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncTelegramSendFailure)})
 			}
+			r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncTelegramSendSuccess)})
 		} else {
 			r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncTelegramSendSuccess)})
 		}
