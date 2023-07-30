@@ -11,7 +11,9 @@ import (
 func (a *App) registerRoutes() {
 	log.Info("[SETUP] Register routes")
 
-	a.registerMonitoringRoutes()
+	if a.configs.Monitoring.IsEnabled {
+		a.registerMonitoringRoutes()
+	}
 
 	api := a.Router.Group("/api")
 	{
@@ -28,6 +30,14 @@ func (a *App) registerRoutes() {
 func (a *App) registerMonitoringRoutes() {
 	if !a.configs.App.Env.IsTesting() {
 		log.Info("[SETUP] Register monitoring routes")
-		a.Router.GET("/metrics", gin.WrapH(promhttp.Handler()))
+		a.Router.GET(
+			"/metrics",
+			gin.WrapH(middlewares.BasicAuth(
+				promhttp.Handler(),
+				"admin",
+				a.configs.Monitoring.Password,
+				"Need authenticate",
+			)),
+		)
 	}
 }
