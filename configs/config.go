@@ -26,6 +26,12 @@ type Config struct {
 		AccessToken  string `yaml:"access_token"`
 	} `yaml:"api"`
 
+	Monitoring struct {
+		IsEnabled bool   `yaml:"enable"`
+		Path      string `yaml:"path"`
+		Password  string `yaml:"password"`
+	} `yaml:"monitoring"`
+
 	Notifier struct {
 		Squadcast struct {
 			IsEnabled bool `yaml:"enable"`

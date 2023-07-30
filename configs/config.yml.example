@@ -18,6 +18,11 @@ api:
   address: "127.0.0.1:8000"
   access_token: eb3eb7c1f789eb3504bcffeeeafbda8f39b34eea3990dc8e2f42bccad5e80978a8a854a13b4b7bf0e15aeb1e2257609a3a796c280be3d29a852b8afc9bd2c11e
 
+monitoring:
+  enable: true
+  path: "/metrics"
+  password: "1234"
+
 notifier:
   squadcast:
     enable: true
