@@ -136,6 +136,17 @@ We have some metrics for monitoring our service in `/metrics` path.
 | `UPTIME_webhook_alert_pool_capacity`     | The alert pool capacity                          |
 | `UPTIME_webhook_alert_pool_running_jobs` | Total number of active jobs in alert pool        |
 
+You can configure monitoring in `config.yml` file:
+
+```yaml
+monitoring:
+  enable: true
+  path: "/metrics"
+  password: "1234"
+```
+
+There is basic authentication for `/metrics` path with username `admin` and your chosen password.
+
 ---
 
 ## Support 💛
