@@ -1,6 +1,7 @@
 package middlewares
 
 import (
+	"crypto/subtle"
 	"errors"
 	"net/http"
 	"strings"
@@ -48,4 +49,19 @@ func getAuthorization(k string) (string, error) {
 	t = strings.Replace(t, "Bearer ", "", 1)
 
 	return t, nil
+}
+
+// Basic authentication for Prometheus
+func BasicAuth(handler http.Handler, username, password, realm string) http.HandlerFunc {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		user, pass, ok := r.BasicAuth()
+
+		if !ok || subtle.ConstantTimeCompare([]byte(user), []byte(username)) != 1 || subtle.ConstantTimeCompare([]byte(pass), []byte(password)) != 1 {
+			w.Header().Set("WWW-Authenticate", `Basic realm="`+realm+`"`)
+			http.Error(w, "Unauthorized.", http.StatusUnauthorized)
+			return
+		}
+
+		handler.ServeHTTP(w, r)
+	})
 }
