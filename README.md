@@ -84,7 +84,11 @@ notifier:
          team2:
             - chat: "-124564"
               topic: "56789"
+            - chat: "-356457"
+              topic: "982456"
 ```
+
+> **Note:** You can use multiple chat/topic for each team
 
 ![telegram](.github/telegram.png)
 
