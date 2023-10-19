@@ -22,14 +22,18 @@ func (r *Repository) CreateTelegramMessage(alert models.Alert) error {
 			continue
 		}
 
-		params := url.Values{}
-		params.Add("chat_id", team[0].Chat)
-		params.Add("parse_mode", "markdownv2")
-		if team[0].Topic != "" {
-			params.Add("message_thread_id", team[0].Topic)
+		// Create a list of URLs for every targets in the team.
+		// For example, a team needs to send a message to 2 chats, so we create 2 URLs.
+		for _, t := range team {
+			params := url.Values{}
+			params.Add("chat_id", t.Chat)
+			params.Add("parse_mode", "markdownv2")
+			if t.Topic != "" {
+				params.Add("message_thread_id", t.Topic)
+			}
+			url := r.config.Notifier.Telegram.Host + r.config.Notifier.Telegram.Token + "/sendMessage?" + params.Encode()
+			urls = append(urls, url)
 		}
-		url := r.config.Notifier.Telegram.Host + r.config.Notifier.Telegram.Token + "/sendMessage?" + params.Encode()
-		urls = append(urls, url)
 	}
 
 	payload := formatTelegramMessage(alert)
