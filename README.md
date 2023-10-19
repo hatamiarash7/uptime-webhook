@@ -88,7 +88,8 @@ notifier:
               topic: "982456"
 ```
 
-> **Note:** You can use multiple chat/topic for each team
+> [!NOTE]
+> You can use multiple chat/topic for each team.
 
 ![telegram](.github/telegram.png)
 
