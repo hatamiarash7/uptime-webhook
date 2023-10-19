@@ -18,3 +18,12 @@ updates:
       - "hatamiarash7"
     reviewers:
       - "hatamiarash7"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    assignees:
+      - "hatamiarash7"
+    reviewers:
+      - "hatamiarash7"
