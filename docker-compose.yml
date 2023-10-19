@@ -1,11 +1,23 @@
 version: "3.9"
-
+name: uptime-webhook
 services:
   webhook:
-    image: hatamiarash7/uptime-webhook:latest
     container_name: uptime-webhook
-    restart: unless-stopped
+    image: hatamiarash7/uptime-webhook:latest
+    networks:
+      default: null
     ports:
-      - 8080:8080
+      - mode: ingress
+        target: 8080
+        published: "8080"
+        protocol: tcp
+    restart: unless-stopped
     volumes:
-      - ./configs/config.yml:/app/configs/config.yml
+      - type: bind
+        source: ./configs/config.yml
+        target: /app/configs/config.yml
+        bind:
+          create_host_path: true
+networks:
+  default:
+    name: uptime-webhook_default
