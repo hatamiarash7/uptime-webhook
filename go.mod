@@ -1,6 +1,6 @@
 module github.com/hatamiarash7/uptime-webhook
 
-go 1.21.3
+go 1.21.4
 
 require (
 	github.com/evalphobia/logrus_sentry v0.8.2
