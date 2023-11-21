@@ -6,7 +6,7 @@ require (
 	github.com/evalphobia/logrus_sentry v0.8.2
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-playground/validator/v10 v10.16.0
-	github.com/panjf2000/ants/v2 v2.8.2
+	github.com/panjf2000/ants/v2 v2.9.0
 	github.com/prometheus/client_golang v1.17.0
 	github.com/sirupsen/logrus v1.9.3
 	gopkg.in/yaml.v3 v3.0.1
