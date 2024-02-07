@@ -2,7 +2,7 @@ FROM --platform=${BUILDPLATFORM:-linux/amd64} alpine:3.19.1 as certs
 
 RUN apk --update add ca-certificates
 
-FROM --platform=${BUILDPLATFORM:-linux/amd64} golang:1.21.6 as builder
+FROM --platform=${BUILDPLATFORM:-linux/amd64} golang:1.22.0 as builder
 
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
