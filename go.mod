@@ -5,9 +5,9 @@ go 1.22.0
 require (
 	github.com/evalphobia/logrus_sentry v0.8.2
 	github.com/gin-gonic/gin v1.9.1
+	github.com/go-co-op/gocron v1.37.0
 	github.com/go-co-op/gocron/v2 v2.2.4
-	github.com/go-co-op/gocron/v2 v2.2.4
-	github.com/go-playground/validator/v10 v10.18.0
+	github.com/go-playground/validator/v10 v10.19.0
 	github.com/panjf2000/ants/v2 v2.9.0
 	github.com/prometheus/client_golang v1.19.0
 	github.com/sirupsen/logrus v1.9.3
