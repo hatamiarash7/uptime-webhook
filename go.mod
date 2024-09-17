@@ -8,7 +8,7 @@ require (
 	github.com/go-co-op/gocron v1.37.0
 	github.com/go-playground/validator/v10 v10.22.1
 	github.com/panjf2000/ants/v2 v2.10.0
-	github.com/prometheus/client_golang v1.20.3
+	github.com/prometheus/client_golang v1.20.4
 	github.com/sirupsen/logrus v1.9.3
 	gopkg.in/yaml.v3 v3.0.1
 )
