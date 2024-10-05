@@ -29,8 +29,8 @@ func (r *Repository) CreateTelegramMessage(alert models.Alert) error {
 			params.Add("chat_id", t.Chat)
 			params.Add("parse_mode", "markdownv2")
 			// Don't send message if the the topic is matched to any dropped rules.
-			if len(r.config.Notifier.Telegram.Drop) > 0 {
-				for _, rule := range r.config.Notifier.Telegram.Drop {
+			if len(t.DropRules) > 0 {
+				for _, rule := range t.DropRules {
 					if rule != t.Topic && t.Topic != "" {
 						params.Add("message_thread_id", t.Topic)
 					}

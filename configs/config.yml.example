@@ -33,16 +33,19 @@ notifier:
     enable: true
     host: "https://api.telegram.org/bot"
     token: "1234:ABCD"
-    drop_rules:
-      - new_api_v2_alert
     teams:
       team1:
         - chat: "-123456789"
+          drop_rules:
+            - new_api_v2_alert
       team2:
         - chat: "-124564"
           topic: "56789"
+          drop_rules:
+          - new_api_v2_alert
         - chat: "-356457"
           topic: "982456"
+          drop_rules: []
   slack:
     enable: true
     teams:
