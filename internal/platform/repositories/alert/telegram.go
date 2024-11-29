@@ -28,8 +28,17 @@ func (r *Repository) CreateTelegramMessage(alert models.Alert) error {
 			params := url.Values{}
 			params.Add("chat_id", t.Chat)
 			params.Add("parse_mode", "markdownv2")
-			if t.Topic != "" {
-				params.Add("message_thread_id", t.Topic)
+			// Don't send message if the the topic is matched to any dropped rules.
+			if len(t.DropRules) > 0 {
+				for _, rule := range t.DropRules {
+					if rule != t.Topic && t.Topic != "" {
+						params.Add("message_thread_id", t.Topic)
+					}
+				}
+			} else {
+				if t.Topic != "" {
+					params.Add("message_thread_id", t.Topic)
+				}
 			}
 			url := r.config.Notifier.Telegram.Host + r.config.Notifier.Telegram.Token + "/sendMessage?" + params.Encode()
 			urls = append(urls, url)
