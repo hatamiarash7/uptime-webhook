@@ -13,7 +13,7 @@ import (
 // shouldDropAlert checks if the alert matches any of the drop rules for the team.
 func shouldDropAlert(alert models.Alert, dropRules []string) bool {
 	for _, rule := range dropRules {
-		if alert.Data.Alert.Output == rule || alert.Data.Alert.ShortOutput == rule || alert.Event == rule {
+		if alert.Data.Service.Name == rule || alert.Data.Service.ShortName == rule {
 			return true
 		}
 	}
