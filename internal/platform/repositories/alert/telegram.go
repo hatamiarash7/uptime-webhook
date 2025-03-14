@@ -10,6 +10,16 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+// shouldDropAlert checks if the alert matches any of the drop rules for the team.
+func shouldDropAlert(alert models.Alert, dropRules []string) bool {
+	for _, rule := range dropRules {
+		if alert.Data.Alert.Output == rule || alert.Data.Alert.ShortOutput == rule || alert.Event == rule {
+			return true
+		}
+	}
+	return false
+}
+
 // CreateTelegramMessage sends a telegram message
 func (r *Repository) CreateTelegramMessage(alert models.Alert) error {
 	var urls []string
@@ -22,26 +32,24 @@ func (r *Repository) CreateTelegramMessage(alert models.Alert) error {
 			continue
 		}
 
-		// Create a list of URLs for every targets in the team.
+		// Create a list of URLs for every target in the team.
 		// For example, a team needs to send a message to 2 chats, so we create 2 URLs.
 		for _, t := range team {
+
+			// Check if the alert matches any drop rules for this team.
+			if shouldDropAlert(alert, t.DropRules) {
+				log.Infof("[Telegram] Alert dropped for team %s due to drop rules: %v", tag, t.DropRules)
+				continue
+			}
+
 			params := url.Values{}
 			params.Add("chat_id", t.Chat)
 			params.Add("parse_mode", "markdownv2")
-			// Don't send message if the the topic is matched to any dropped rules.
-			if len(t.DropRules) > 0 {
-				for _, rule := range t.DropRules {
-					if rule != t.Topic && t.Topic != "" {
-						params.Add("message_thread_id", t.Topic)
-					}
-				}
-			} else {
-				if t.Topic != "" {
-					params.Add("message_thread_id", t.Topic)
-				}
+			if t.Topic != "" {
+				params.Add("message_thread_id", t.Topic)
 			}
-			url := r.config.Notifier.Telegram.Host + r.config.Notifier.Telegram.Token + "/sendMessage?" + params.Encode()
-			urls = append(urls, url)
+			u := r.config.Notifier.Telegram.Host + r.config.Notifier.Telegram.Token + "/sendMessage?" + params.Encode()
+			urls = append(urls, u)
 		}
 	}
 
@@ -52,8 +60,12 @@ func (r *Repository) CreateTelegramMessage(alert models.Alert) error {
 		return err
 	}
 
-	for _, url := range urls {
-		r.CallTelegram(url, body)
+	for _, u := range urls {
+		err = r.CallTelegram(u, body)
+		if err != nil {
+			log.Errorf("[Telegram] Failed to send Telegram message: %s", err)
+			r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncTelegramSendFailure)})
+		}
 	}
 
 	return nil

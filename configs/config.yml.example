@@ -45,7 +45,6 @@ notifier:
           - new_api_v2_alert
         - chat: "-356457"
           topic: "982456"
-          drop_rules: []
   slack:
     enable: true
     teams:
