@@ -36,9 +36,13 @@ notifier:
     teams:
       team1:
         - chat: "-123456789"
+          drop_rules:
+            - new_api_v2_alert
       team2:
         - chat: "-124564"
           topic: "56789"
+          drop_rules:
+          - new_api_v2_alert
         - chat: "-356457"
           topic: "982456"
   slack:
