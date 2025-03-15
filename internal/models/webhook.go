@@ -8,4 +8,6 @@ type CustomMessage struct {
 	Date        string `json:"date,omitempty"`
 	Address     string `json:"address,omitempty"`
 	ShortOutput string `json:"short_output,omitempty"`
+	EventID     string `json:"event_id"`
+	AlertLink   string `json:"alert_link"`
 }

@@ -137,6 +137,8 @@ func formatCustomMessage(alert models.Alert) models.CustomMessage {
 		Date:        date,
 		Address:     alert.Data.Device.Address,
 		ShortOutput: alert.Data.Alert.ShortOutput,
+		EventID:     strconv.Itoa(alert.Data.Device.ID),
+		AlertLink:   alert.Data.Links.AlertDetails,
 	}
 }
 
