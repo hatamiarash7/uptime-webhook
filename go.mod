@@ -4,7 +4,7 @@ go 1.24.1
 
 require (
 	github.com/evalphobia/logrus_sentry v0.8.2
-	github.com/gin-gonic/gin v1.10.0
+	github.com/gin-gonic/gin v1.10.1
 	github.com/go-co-op/gocron v1.37.0
 	github.com/go-playground/validator/v10 v10.26.0
 	github.com/panjf2000/ants/v2 v2.11.3
