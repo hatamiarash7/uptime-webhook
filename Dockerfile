@@ -1,4 +1,4 @@
-FROM --platform=${BUILDPLATFORM:-linux/amd64} alpine:3.21.3 as certs
+FROM --platform=${BUILDPLATFORM:-linux/amd64} alpine:3.22.0 as certs
 
 RUN apk --update add ca-certificates
 
