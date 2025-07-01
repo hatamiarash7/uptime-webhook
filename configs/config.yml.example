@@ -46,6 +46,11 @@ notifier:
     teams:
       team1: ""
       team2: ""
+  mattermost:
+    enable: true
+    teams:
+      team1: ""
+      team2: ""
   custom:
     enable: true
     teams:

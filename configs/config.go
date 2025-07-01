@@ -47,6 +47,10 @@ type Config struct {
 			IsEnabled bool `yaml:"enable"`
 			Teams     map[string]string
 		} `yaml:"slack"`
+		Mattermost struct {
+			IsEnabled bool `yaml:"enable"`
+			Teams     map[string]string
+		} `yaml:"mattermost"`
 		Custom struct {
 			IsEnabled bool `yaml:"enable"`
 			Teams     map[string]string

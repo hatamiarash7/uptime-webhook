@@ -18,6 +18,8 @@ var (
 	telegramFailure      prometheus.Counter
 	squadcastSuccess     prometheus.Counter
 	squadcastFailure     prometheus.Counter
+	mattermostSuccess    prometheus.Counter
+	mattermostFailure    prometheus.Counter
 	slackSuccess         prometheus.Counter
 	slackFailure         prometheus.Counter
 	customSuccess        prometheus.Counter
@@ -68,6 +70,20 @@ func NewPrometheusMonitor() Monitor {
 		Subsystem: subsystem,
 		Name:      "squadcast_failure",
 		Help:      "Total number of failure notify requests to Squadcast.",
+	})
+
+	mattermostSuccess = promauto.NewCounter(prometheus.CounterOpts{
+		Namespace: namespace,
+		Subsystem: subsystem,
+		Name:      "mattermost_success",
+		Help:      "Total number of successful notify requests to Mattermost.",
+	})
+
+	mattermostFailure = promauto.NewCounter(prometheus.CounterOpts{
+		Namespace: namespace,
+		Subsystem: subsystem,
+		Name:      "mattermost_failure",
+		Help:      "Total number of failure notify requests to Mattermost.",
 	})
 
 	slackSuccess = promauto.NewCounter(prometheus.CounterOpts{
@@ -129,6 +145,10 @@ func (i PrometheusMonitor) Record(events []Event) {
 			squadcastSuccess.Inc()
 		case IncSquadcastSendFailure:
 			squadcastFailure.Inc()
+		case IncMattermostSendSuccess:
+			mattermostSuccess.Inc()
+		case IncMattermostSendFailure:
+			mattermostFailure.Inc()
 		case IncSlackSendSuccess:
 			slackSuccess.Inc()
 		case IncSlackSendFailure:

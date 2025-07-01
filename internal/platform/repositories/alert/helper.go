@@ -116,6 +116,33 @@ func formatSlackMessage(alert models.Alert) models.SlackMessage {
 	return payload
 }
 
+func formatMattermostMessage(alert models.Alert) models.MattermostMessage {
+	var text string
+
+	if alert.Event == "alert_raised" {
+		text = "🔥 **Alert - " + alert.Data.Alert.State + "**\n\n"
+		text += "🏷 **Title:** The \"" + alert.Data.Service.ShortName + "\" is down\n\n"
+		text += "📄 **Description:** Your `" + alert.Data.Service.DisplayName +
+			"` service is down" +
+			" at *" + alert.Data.Alert.CreatedAt.Format("2006-01-02 15:04:05") + "*\n\n"
+		text += "💻 **Address:** " + alert.Data.Device.Address + "\n\n"
+		text += "🔍 **Result:** " + alert.Data.Alert.ShortOutput + "\n"
+	} else {
+		text = "✅ **Resolved**\n\n"
+		text += "🏷 **Title:** The \"" + alert.Data.Service.ShortName + "\" is up\n\n"
+		text += "💻 **Address:** " + alert.Data.Device.Address + "\n\n"
+		text += "⏱️ **Time:** " + alert.Data.Date.Format("2006-01-02 15:04:05") + "\n\n"
+	}
+
+	payload := models.MattermostMessage{
+		Text:     text,
+		Username: "Uptime",
+		Icon:     "https://uptime.com/images/footer/assets/uptime-logo.svg",
+	}
+
+	return payload
+}
+
 func formatCustomMessage(alert models.Alert) models.CustomMessage {
 	var (
 		status string

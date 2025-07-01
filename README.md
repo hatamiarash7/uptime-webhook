@@ -10,6 +10,7 @@
     - [Squadcast](#squadcast)
     - [Telegram](#telegram)
     - [Slack](#slack)
+    - [Mattermost](#mattermost)
     - [Custom Webhook](#custom-webhook)
   - [Monitoring](#monitoring)
   - [Support 💛](#support-)
@@ -110,6 +111,23 @@ notifier:
 
    ![slack](.github/slack.png)
 
+### Mattermost
+
+1. Create a new channel in Mattermost
+2. Create a new webhook and assign it to your channel
+3. Define the webhook in `config.yml` file
+
+   ```yaml
+   notifier:
+      mattermost:
+         enable: true
+         teams:
+            team1: "<WEBHOOK-URL>"
+            team2: "<WEBHOOK-URL>"
+   ```
+
+   ![mattermost](.github/mattermost.png)
+
 ### Custom Webhook
 
 Fill your `notifier` with a `custom` section and put your webhook URL like this:
@@ -134,6 +152,8 @@ We have some metrics for monitoring our service in `/metrics` path.
 | `UPTIME_webhook_telegram_failure`        | Total number of failure Telegram notify          |
 | `UPTIME_webhook_squadcast_success`       | Total number of successful Squadcast notify      |
 | `UPTIME_webhook_squadcast_failure`       | Total number of failure Squadcast notify         |
+| `UPTIME_webhook_mattermost_success`      | Total number of successful Mattermost notify     |
+| `UPTIME_webhook_mattermost_failure`      | Total number of failure Mattermost notify        |
 | `UPTIME_webhook_slack_success`           | Total number of successful Slack notify          |
 | `UPTIME_webhook_slack_failure`           | Total number of failure Slack notify             |
 | `UPTIME_webhook_custom_success`          | Total number of successful Custom Webhook notify |
