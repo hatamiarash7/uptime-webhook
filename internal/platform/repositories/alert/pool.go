@@ -106,6 +106,30 @@ func (r *Repository) CallSlack(url string, body []byte) error {
 	})
 }
 
+// CallMattermost will send a Mattermost http request
+func (r *Repository) CallMattermost(url string, body []byte) error {
+	u, err := net_url.ParseRequestURI(url)
+
+	if err != nil {
+		log.WithError(err).Errorf("[MATTERMOST] Error parsing URL: %s", url)
+		r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncMattermostSendFailure)})
+		return err
+	}
+
+	return r.pool.Submit(func() {
+		result, err := sendPOSTRequest(u.String(), body, r.version)
+
+		if err != nil {
+			log.WithError(err).Error("[MATTERMOST] Error sending request to " + u.String())
+			r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncMattermostSendFailure)})
+			return
+		}
+
+		log.Debugf("[MATTERMOST] Result: %s", result)
+		r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncMattermostSendSuccess)})
+	})
+}
+
 // CallCustom will send a Custom http request
 func (r *Repository) CallCustom(url string, body []byte) error {
 	u, err := net_url.ParseRequestURI(url)

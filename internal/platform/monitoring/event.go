@@ -14,6 +14,10 @@ const (
 	IncSquadcastSendSuccess
 	// IncSquadcastSendFailure will show the total failure squadcast sends
 	IncSquadcastSendFailure
+	// IncMattermostSendSuccess will show the total success squadcast sends
+	IncMattermostSendSuccess
+	// IncMattermostSendFailure will show the total failure squadcast sends
+	IncMattermostSendFailure
 	// IncSlackSendSuccess will show the total success squadcast sends
 	IncSlackSendSuccess
 	// IncSlackSendFailure will show the total failure squadcast sends
