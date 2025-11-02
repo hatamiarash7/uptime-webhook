@@ -74,6 +74,11 @@ ifeq ($(EXPORT_RESULT), TRUE)
 	rm -f coverage.out
 endif
 
+.PHONEY: vulnerability-scan ## Scan the project for known vulnerabilities
+vulnerability-scan:
+	go install github.com/google/osv-scanner/v2/cmd/osv-scanner@latest
+	osv-scanner scan ./
+
 ##################################### Help #####################################
 
 help: ## Show this help
