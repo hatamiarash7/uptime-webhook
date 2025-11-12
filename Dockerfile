@@ -1,20 +1,18 @@
 FROM --platform=${BUILDPLATFORM:-linux/amd64} alpine:3.22.2 AS certs
 
-RUN apk --update add ca-certificates
+RUN apk --update --no-cache add ca-certificates
 
 FROM --platform=${BUILDPLATFORM:-linux/amd64} golang:1.25.4 AS builder
 
-ARG TARGETPLATFORM
-ARG BUILDPLATFORM
 ARG TARGETOS
 ARG TARGETARCH
 
 WORKDIR /app/
-ADD . .
+COPY . .
 
 RUN GO111MODULE=on CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -ldflags="-s -w" -o webhook cmd/*.go
 
-FROM --platform=${TARGETPLATFORM:-linux/amd64} scratch
+FROM scratch
 
 ARG DATE_CREATED
 ARG APP_VERSION
