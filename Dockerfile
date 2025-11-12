@@ -20,10 +20,11 @@ ARG DATE_CREATED
 ARG APP_VERSION
 ENV APP_VERSION=$APP_VERSION
 
-LABEL org.opencontainers.image.created=$DATE_CREATED
+LABEL org.opencontainers.image.created="$DATE_CREATED"
 LABEL org.opencontainers.version="$APP_VERSION"
 LABEL org.opencontainers.image.authors="Arash Hatami <info@arash-hatami.ir>"
 LABEL org.opencontainers.image.vendor="hatamiarash7"
+LABEL org.opencontainers.image.licenses="MIT"
 LABEL org.opencontainers.image.title="uptime-webhook"
 LABEL org.opencontainers.image.description="It's a webhook handler for uptime.com"
 LABEL org.opencontainers.image.source="https://github.com/hatamiarash7/uptime-webhook"
