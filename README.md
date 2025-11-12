@@ -145,21 +145,22 @@ notifier:
 
 We have some metrics for monitoring our service in `/metrics` path.
 
-| Metric name                              | Description                                      |
-| ---------------------------------------- | ------------------------------------------------ |
-| `UPTIME_webhook_total_alerts`            | Total number of alerts                           |
-| `UPTIME_webhook_telegram_success`        | Total number of successful Telegram notify       |
-| `UPTIME_webhook_telegram_failure`        | Total number of failure Telegram notify          |
-| `UPTIME_webhook_squadcast_success`       | Total number of successful Squadcast notify      |
-| `UPTIME_webhook_squadcast_failure`       | Total number of failure Squadcast notify         |
-| `UPTIME_webhook_mattermost_success`      | Total number of successful Mattermost notify     |
-| `UPTIME_webhook_mattermost_failure`      | Total number of failure Mattermost notify        |
-| `UPTIME_webhook_slack_success`           | Total number of successful Slack notify          |
-| `UPTIME_webhook_slack_failure`           | Total number of failure Slack notify             |
-| `UPTIME_webhook_custom_success`          | Total number of successful Custom Webhook notify |
-| `UPTIME_webhook_custom_failure`          | Total number of failure Custom Webhook notify    |
-| `UPTIME_webhook_alert_pool_capacity`     | The alert pool capacity                          |
-| `UPTIME_webhook_alert_pool_running_jobs` | Total number of active jobs in alert pool        |
+| Metric name                              | Label     | Description                                      |
+| ---------------------------------------- | --------- | ------------------------------------------------ |
+| `UPTIME_webhook_total_alerts`            |           | Total number of alerts                           |
+| `UPTIME_webhook_telegram_success`        |           | Total number of successful Telegram notify       |
+| `UPTIME_webhook_telegram_failure`        |           | Total number of failure Telegram notify          |
+| `UPTIME_webhook_squadcast_success`       |           | Total number of successful Squadcast notify      |
+| `UPTIME_webhook_squadcast_failure`       |           | Total number of failure Squadcast notify         |
+| `UPTIME_webhook_mattermost_success`      |           | Total number of successful Mattermost notify     |
+| `UPTIME_webhook_mattermost_failure`      |           | Total number of failure Mattermost notify        |
+| `UPTIME_webhook_slack_success`           |           | Total number of successful Slack notify          |
+| `UPTIME_webhook_slack_failure`           |           | Total number of failure Slack notify             |
+| `UPTIME_webhook_custom_success`          |           | Total number of successful Custom Webhook notify |
+| `UPTIME_webhook_custom_failure`          |           | Total number of failure Custom Webhook notify    |
+| `UPTIME_webhook_alert_pool_capacity`     |           | The alert pool capacity                          |
+| `UPTIME_webhook_alert_pool_running_jobs` |           | Total number of active jobs in alert pool        |
+| `UPTIME_webhook_check_status`            | `service` | Status of the last check (1 = up, 0 = down)      |
 
 You can configure monitoring in `config.yml` file:
 

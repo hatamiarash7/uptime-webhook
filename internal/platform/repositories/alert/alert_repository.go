@@ -33,6 +33,11 @@ func NewAlertRepository(c configs.Config, pool *ants.Pool, version string, monit
 // CreateAlert creates an alert
 func (r *Repository) CreateAlert(ctx context.Context, alert models.Alert) error {
 	r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(monitoring.IncTotalAlert)})
+	r.monitoring.Record([]monitoring.Event{monitoring.NewEvent(
+		monitoring.SetCheckStatus,
+		alert.Data.Service.ShortName,
+		alert.Data.Alert.IsUp,
+	)})
 
 	if r.config.Notifier.Squadcast.IsEnabled {
 		if err := r.CreateSquadcastIncident(alert); err != nil {

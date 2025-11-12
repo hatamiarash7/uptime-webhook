@@ -30,6 +30,8 @@ const (
 	SetActiveJobsInAlertPool
 	// SetAlertPoolCapacity will show the total capacity of alert pool
 	SetAlertPoolCapacity
+	// SetCheckStatus will set the status of a check
+	SetCheckStatus
 )
 
 // Event is the event structure

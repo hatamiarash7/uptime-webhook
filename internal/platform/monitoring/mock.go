@@ -39,6 +39,8 @@ func (i MockMonitor) Record(events []Event) {
 			log.Info("====SetActiveJobsInAlertPool=====")
 		case SetAlertPoolCapacity:
 			log.Info("====SetAlertPoolCapacity=====")
+		case SetCheckStatus:
+			log.Info("====SetCheckStatus=====")
 		default:
 			log.Errorf("[MONITORING] Invalid event id [%d]", event.GetID())
 		}

@@ -26,6 +26,7 @@ var (
 	customFailure        prometheus.Counter
 	alertPoolCapacity    prometheus.Gauge
 	alertPoolRunningJobs prometheus.Gauge
+	checkStatus          *prometheus.GaugeVec
 )
 
 // PrometheusMonitor is the prometheus monitor
@@ -43,6 +44,13 @@ func NewPrometheusMonitor() Monitor {
 		Name:      "total_alerts",
 		Help:      "Number of total alerts that received.",
 	})
+
+	checkStatus = promauto.NewGaugeVec(prometheus.GaugeOpts{
+		Namespace: namespace,
+		Subsystem: subsystem,
+		Name:      "check_status",
+		Help:      "Status of the last check (1 = up, 0 = down).",
+	}, []string{"service"})
 
 	telegramSuccess = promauto.NewCounter(prometheus.CounterOpts{
 		Namespace: namespace,
@@ -161,6 +169,13 @@ func (i PrometheusMonitor) Record(events []Event) {
 			alertPoolRunningJobs.Set(float64(event.GetParam(0).(int)))
 		case SetAlertPoolCapacity:
 			alertPoolCapacity.Set(float64(event.GetParam(0).(int)))
+		case SetCheckStatus:
+			boolVal := event.GetParam(1).(bool)
+			intVal := 0
+			if boolVal {
+				intVal = 1
+			}
+			checkStatus.WithLabelValues(event.GetParam(0).(string)).Set(float64(intVal))
 		default:
 			log.Errorf("[MONITORING] Invalid event id [%d]", event.GetID())
 		}
