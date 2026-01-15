@@ -9,7 +9,7 @@ require (
 	github.com/go-playground/validator/v10 v10.30.1
 	github.com/panjf2000/ants/v2 v2.11.4
 	github.com/prometheus/client_golang v1.23.2
-	github.com/sirupsen/logrus v1.9.3
+	github.com/sirupsen/logrus v1.9.4
 	gopkg.in/yaml.v3 v3.0.1
 )
 
