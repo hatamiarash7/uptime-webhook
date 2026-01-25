@@ -62,11 +62,12 @@ type Config struct {
 
 // TelegramTeam is a struct for Telegram team configuration
 type TelegramTeam struct {
-	Chat  string `yaml:"chat"`
-	Topic string `yaml:"topic"`
+	Chat      string   `yaml:"chat"`
+	Topic     string   `yaml:"topic"`
+	DropRules []string `yaml:"drop_rules,omitempty"`
 }
 
-// Load will loads the configuration from the given path
+// Load will load the configuration from the given path
 func Load(configPath string) (*Config, error) {
 	var cfg Config
 	absPath, err := filepath.Abs(configPath)
