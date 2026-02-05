@@ -2,7 +2,7 @@ FROM --platform=${BUILDPLATFORM:-linux/amd64} alpine:3.23.3 AS certs
 
 RUN apk --update --no-cache add ca-certificates
 
-FROM --platform=${BUILDPLATFORM:-linux/amd64} golang:1.25.7 AS builder
+FROM --platform=${BUILDPLATFORM:-linux/amd64} golang:1.26rc3 AS builder
 
 ARG TARGETOS
 ARG TARGETARCH
